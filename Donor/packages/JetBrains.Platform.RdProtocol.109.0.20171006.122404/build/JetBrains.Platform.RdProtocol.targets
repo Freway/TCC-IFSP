@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetFrameworkVersionNumberCyqynob Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*'))">$([MSBuild]::Add($([MSBuild]::Multiply($([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*', '$1')), 1000)), $([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*', '$2'))))</TargetFrameworkVersionNumberCyqynob>
+    <TargetFrameworkVersionNumberCyqynob Condition="'$(TargetFrameworkVersionNumberCyqynob)' == ''">65535</TargetFrameworkVersionNumberCyqynob>
+  </PropertyGroup>
+  <ItemGroup>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.RdFramework.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Platform.RdFramework" Condition="($(TargetFrameworkVersionNumberCyqynob) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.RdFramework.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.RdFramework.Shell.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Platform.RdFramework.Shell" Condition="($(TargetFrameworkVersionNumberCyqynob) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.RdFramework.Shell.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.RdProtocol.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Platform.RdProtocol" Condition="($(TargetFrameworkVersionNumberCyqynob) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.RdProtocol.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetContent Include="$(MSBuildThisFileDirectory)..\DotFiles\NetStandard\JetBrains.Platform.RdFramework.NetStandard.dll">
+      <TargetPath>NetStandard\JetBrains.Platform.RdFramework.NetStandard.dll</TargetPath>
+    </JetContent>
+    <JetMetadata Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.RdProtocol.JetMetadata.sstg" />
+  </ItemGroup>
+</Project>

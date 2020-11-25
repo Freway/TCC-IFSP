@@ -1,0 +1,147 @@
+﻿@model Donor.Models.Usuario
+
+@{
+    ViewBag.Title = "Perfil de Usuário";
+}
+
+<h2>Criar Perfil</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Usuário</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", Value = User.Identity.Name, @readonly = true } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sexo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.Sexo, new SelectList(new List<object>{
+                    new {value = "", text = ""},
+                    new {value = "M", text = "Masculino"},
+                    new {value = "F", text = "Feminino"}
+                },"value", "text", ""), new { @class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Sexo, "", new{@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TipoSanguineo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.TipoSanguineo, new SelectList(new List<object>{
+                    new {value = "A+", text = "A+"},
+                    new {value = "A-", text = "A-"},
+                    new {value = "B+", text = "B+"},
+                    new {value = "B-", text = "B-"},
+                    new {value = "AB+", text = "AB+"},
+                    new {value = "AB-", text = "AB-"},
+                    new {value = "O+", text = "O+"},
+                    new {value = "O-", text = "O-"}
+                }, "value", "text", ""), new { @class = "form-control" })                   
+                @Html.ValidationMessageFor(model => model.TipoSanguineo, "", new{@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Telefone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Telefone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Telefone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdMunicipio, "Estado", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">                
+                <select class="form-control col-md-5" id="sel_estado">
+                    <option value=" " selected></option> 
+                </select>
+                
+            </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdMunicipio, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IdMunicipio", null, htmlAttributes: new { @class = "form-control col-md-5" })
+                    @Html.ValidationMessageFor(model => model.IdMunicipio, "", new { @class = "text-danger", id = "municipios" })
+                </div>
+            </div>
+        
+        <!-- Default usuario doador -->
+        <input hidden name="IdTipoUsuario" value="2"/>     
+        <div class="form-group">
+            @Html.LabelFor(model => model.DoadorMedula, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.DoadorMedula)
+                    @Html.ValidationMessageFor(model => model.DoadorMedula, "", new { @class = "text-danger" })
+                    Sim
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-8">
+                <input type="submit" value="Criar" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerymask")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            console.log("Teste");
+            $.ajax({
+                url: "/Usuario/GetEstados",
+                dataType: "json",
+                success: function (estados) {
+                    for (var i = 0; i < estados.length; i++) {
+                        $("#sel_estado").append($("<option />").val(estados[i]).text(estados[i]));
+                    }
+                }
+            });
+
+            $("#Telefone").mask("(99) 99999-9999");
+        });        
+
+        $("#sel_estado").change(function () {
+            var estado = $("#sel_estado").val();
+            console.log("Chamando api....");
+            $("#IdMunicipio").empty();
+            $("#IdMunicipio").append($("<option />").val("Carregando Cidades").text("Carregado Cidades..."));
+            $.ajax({
+                url: "/municipios?estado=" + estado, dataType: "json",
+                success: function (result) {                 
+                    $("#IdMunicipio").empty();
+                    for (var i = 0; i < result.length; i++) {
+                        $("#IdMunicipio").append($("<option />").val(result[i].IdMunicipio).text(result[i].Municipio1));
+                    }
+                }, error: function(erro) {
+                    console.log(erro);
+                }});
+        });
+
+    </script>
+}

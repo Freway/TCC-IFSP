@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Donor.Models.PontoDeDoacao>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Municipio.Municipio1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContaInativa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Token)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Localizacao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NomeResponsavel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefone)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Municipio.Municipio1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContaInativa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Token)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Localizacao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomeResponsavel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefone)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdPontoDeDoacao }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdPontoDeDoacao }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdPontoDeDoacao })
+        </td>
+    </tr>
+}
+
+</table>

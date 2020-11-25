@@ -1,0 +1,35 @@
+﻿@using System.Security.Claims
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+
+            @{
+                var identity = (ClaimsIdentity) User.Identity;
+                var name = identity.Claims.FirstOrDefault(claim => claim.Type == "Nome")?.Value ?? identity.Name;
+                var id =Convert.ToInt32(identity.Claims.FirstOrDefault(claim => claim.Type == "IdUsuario")?.Value);
+                if (id != 0){
+                    @Html.ActionLink("Olá, " + name + "!", "Edit", "Usuario", routeValues: new { Id = id }, htmlAttributes: new{title = "Manage"})
+                }
+                else{
+                    id =Convert.ToInt32(identity.Claims.FirstOrDefault(claim => claim.Type == "IdPontoDeDoacao")?.Value);
+                    @Html.ActionLink("Olá, " + name + "!", "Edit", "PontoDeDoacao", routeValues: new { Id = id }, htmlAttributes: new{title = "Manage"})  
+                }
+                
+            }
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Sair</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Entrar", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Cadastrar", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+    </ul>
+}

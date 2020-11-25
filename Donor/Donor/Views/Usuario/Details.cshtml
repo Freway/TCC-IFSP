@@ -1,0 +1,98 @@
+﻿@model Donor.Models.Usuario
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Usuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Municipio.Municipio1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Municipio.Municipio1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoUsuario.TipoUsuario1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoUsuario.TipoUsuario1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sexo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sexo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoSanguineo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoSanguineo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContaInativa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContaInativa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DoadorMedula)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DoadorMedula)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Token)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Token)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdUsuario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

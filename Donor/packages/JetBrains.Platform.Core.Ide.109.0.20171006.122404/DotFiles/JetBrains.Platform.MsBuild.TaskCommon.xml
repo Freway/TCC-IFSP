@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.MsBuild.TaskCommon</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.Platform.MsBuild.TaskCommon.Utils.MsBuildPath">
+            <summary>
+            Light version of FileSystemPath for MsBuild task
+            </summary>
+        </member>
+    </members>
+</doc>

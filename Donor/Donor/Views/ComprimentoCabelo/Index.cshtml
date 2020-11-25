@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Donor.Models.ComprimentoCabelo>
+
+@{
+    ViewBag.Title = "Donor";
+}
+
+<h2>Comprimento do cabelo</h2>
+
+<p>
+    @Html.ActionLink("Nova Medida", "Create", null, new { @class = "botao" })
+</p>
+<table class="table">
+    <tr>
+  <!--      <th>
+            @Html.DisplayNameFor(model => model.Usuario.Nome)
+        </th>-->
+        <th>
+            @Html.DisplayNameFor(model => model.Comprimento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataRegistro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataDoacaoCabelo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+     <!--       <td>
+                @Html.DisplayFor(modelItem => item.Usuario.Nome)
+            </td> -->
+            <td>
+                @Html.DisplayFor(modelItem => item.Comprimento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataRegistro)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Editar", new { id = item.IdComprimentoCabelo }) |
+                @Html.ActionLink("Details", "Detalhes", new { id = item.IdComprimentoCabelo }) |
+                @Html.ActionLink("Delete", "Apagar", new { id = item.IdComprimentoCabelo })
+            </td>
+        </tr>
+    }
+
+</table>

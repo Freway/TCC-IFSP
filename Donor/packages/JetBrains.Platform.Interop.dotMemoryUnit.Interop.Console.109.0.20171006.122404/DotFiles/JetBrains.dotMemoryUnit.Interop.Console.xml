@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.dotMemoryUnit.Interop.Console</name>
+    </assembly>
+    <members>
+        <member name="M:JetBrains.dotMemoryUnit.Interop.Console.DotMemoryUnitOptions.#ctor">
+            <summary>
+            Default constructor used by command line mapper.
+            </summary>
+        </member>
+        <member name="M:JetBrains.dotMemoryUnit.Interop.Console.DotMemoryUnitOptions.#ctor(System.String,System.String)">
+            <summary>
+            Example constructor used to create sample options.
+            </summary>
+            <param name="executable"></param>
+            <param name="arguments"></param>
+        </member>
+        <member name="M:JetBrains.dotMemoryUnit.Interop.Console.DotMemoryUnitOptions.#ctor(System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor used to create options in tests.
+            </summary>
+            <param name="executable"></param>
+            <param name="arguments"></param>
+            <param name="isUpdatesDisabled"></param>
+            <param name="isExitCodePropagated"></param>
+        </member>
+        <member name="M:JetBrains.dotMemoryUnit.Interop.Console.DotMemoryUnitOptions.#ctor(JetBrains.CommandLine.Interop.Logging.LoggingOptions,JetBrains.CommandLine.Interop.Profiler.ProfilerCoreOptions,JetBrains.dotMemoryUnit.Interop.Console.DotMemoryUnitOptions.InternalOptions,JetBrains.Util.FileSystemPath,System.String,JetBrains.Util.FileSystemPath,JetBrains.Util.FileSystemPath,JetBrains.Util.FileSystemPath,JetBrains.Util.FileSystemPath,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Backward compatibility constructor used to create options from arguments bag.
+            </summary>
+            <param name="executable"></param>
+            <param name="arguments"></param>
+            <param name="workingDir"></param>
+            <param name="tempDir"></param>
+            <param name="workspaceDir"></param>
+            <param name="outputFile"></param>
+            <param name="isExitCodePropagated"></param>
+            <param name="dontInheritConsole"></param>
+            <param name="isInstrumentationDisabled"></param>
+            <param name="isUpdatesDisabled"></param>
+            <param name="loggingOptions"></param>
+            <param name="coreOptions"></param>
+            <param name="internals"></param>
+            <param name="isAutoCleanupDisabled"></param>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetFrameworkVersionNumberMilebof Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*'))">$([MSBuild]::Add($([MSBuild]::Multiply($([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*', '$1')), 1000)), $([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*', '$2'))))</TargetFrameworkVersionNumberMilebof>
+    <TargetFrameworkVersionNumberMilebof Condition="'$(TargetFrameworkVersionNumberMilebof)' == ''">65535</TargetFrameworkVersionNumberMilebof>
+  </PropertyGroup>
+  <ItemGroup>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Psi.Features.UIInteractive.Core.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Psi.Features.UIInteractive.Core" Condition="($(TargetFrameworkVersionNumberMilebof) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Psi.Features.UIInteractive.Core.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetMetadata Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Psi.Features.UIInteractive.Core.JetMetadata.sstg" />
+  </ItemGroup>
+</Project>

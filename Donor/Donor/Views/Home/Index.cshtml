@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Donor";
+    ViewBag.Page = "Inicial";
+}
+
+
+<div class="row" style="min-height:100px; margin-top:30px;">
+
+    <div class="col-md-6" id="map" style="height:400px;">
+    </div>
+
+    <div class="col-md-6" style="height:400px; background-color:#F74051; border-bottom-right-radius:6px; border-top-right-radius:6px; border-left-color:#ffffff; border-left-width:5px;border-left-style:solid;">
+
+        FORMULÁRIO DE PESQUISA DE PONTOS DE DOAÇÃO
+
+    </div>
+
+
+</div>
+
+<div class="row" style="margin-top:30px; margin-bottom:30px;">
+
+    <div class="col-md-12">
+        <center><h2>TIPO DE DOAÇÕES</h2>Com nossa aplicação você poderá registrar e controlar doações do tipo:</center>
+    </div>
+
+</div>
+<div class="row" style="margin-bottom:30px;">
+    <div class="col-md-4">
+        <center><img src="~/Content/images/sangue_icon.png" /><br /><b>Sangue</b></center><br />
+        <p>Você registra e monitora os períodos de doação de sangue para manter um hábito constante de doações e controle destas.</p>
+    </div>
+    <div class="col-md-4">
+        <center><img src="~/Content/images/cabelo_icon.png" /><br /><b>Cabelo</b></center><br />
+        <p>Com ajuda de um profissional, de amigos ou até sozinho, poderá medir o comprimento de seu cabelo, registrar na aplicação e ter uma ideia da provável data para cortá-lo, dentro dos padrões exigidos na doação de cabelos.</p>
+    </div>
+    <div class="col-md-4">
+        <center><img src="~/Content/images/plaquetas_icon.jpeg" /><br /><b>Plaquetas</b></center><br />
+        <p>Para doação de plaquetas é retirado sangue em menor quantidade e, consequentemente pode ser realizada mais vezes por ter um intervalo menor entre doações.</p>
+    </div>
+
+
+</div>
+
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-2"><img src="~/Content/images/logo_white.png" class="logo_white" /></div>
+        <div class="col-md-10" style="margin-top:20px;">Aplicação desenvolvida para a matéria de Prática de Gerenciamento de Projetos - A6PGP<br />
+        do Instituto Federal de Educação, Ciência e Tecnologia do Estado de São Paulo - IFSP</div>
+    </div>
+    <hr size="1">
+    <h3>Links Importantes:</h3>
+    <div class="row">
+        <div class="col-md-6">
+            &#9654; Ministério da Saúde<br />
+            &#9654; REDOME - Registro Nacional dos Doadores de Medula Óssea<br />
+            &#9654; Fundação Pró-Sangue
+        </div>
+        <div class="col-md-6">
+            &#9654; GRAAC - Grupo de Apoio ao Adolescente e à Criança com Câncer<br />
+            &#9654; Instituto do Câncer do Estado de São Paulo
+        </div>
+
+    </div>
+    
+</div>
+
+<!--
+<div class="row">
+    <div class="col-md-offset-5 col-md-2">
+        @if(!User.Identity.IsAuthenticated) {
+            @Html.ActionLink("Registre-se", "Register", "Account", null, new{@class = "btn btn-danger btn-block"})
+        }
+    </div>
+</div> -->

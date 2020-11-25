@@ -1,0 +1,42 @@
+﻿@model Donor.Models.ComprimentoCabelo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ComprimentoCabelo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comprimento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comprimento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataRegistro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataRegistro)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdComprimentoCabelo }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

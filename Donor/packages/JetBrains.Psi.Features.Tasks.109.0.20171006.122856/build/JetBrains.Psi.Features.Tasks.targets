@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetFrameworkVersionNumberVumowyv Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*'))">$([MSBuild]::Add($([MSBuild]::Multiply($([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*', '$1')), 1000)), $([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*', '$2'))))</TargetFrameworkVersionNumberVumowyv>
+    <TargetFrameworkVersionNumberVumowyv Condition="'$(TargetFrameworkVersionNumberVumowyv)' == ''">65535</TargetFrameworkVersionNumberVumowyv>
+  </PropertyGroup>
+  <ItemGroup>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\CsLex.exe">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="CsLex" Condition="($(TargetFrameworkVersionNumberVumowyv) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\CsLex.exe</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\ErrorsGen.exe">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="ErrorsGen" Condition="($(TargetFrameworkVersionNumberVumowyv) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\ErrorsGen.exe</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Psi.Features.Tasks.Build.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Psi.Features.Tasks.Build" Condition="($(TargetFrameworkVersionNumberVumowyv) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Psi.Features.Tasks.Build.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JsLibGen.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JsLibGen" Condition="($(TargetFrameworkVersionNumberVumowyv) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JsLibGen.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\LibGeneratorUtil.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="LibGeneratorUtil" Condition="($(TargetFrameworkVersionNumberVumowyv) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\LibGeneratorUtil.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\PsiGen.exe">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="PsiGen" Condition="($(TargetFrameworkVersionNumberVumowyv) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\PsiGen.exe</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\TokenGenerator.exe">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="TokenGenerator" Condition="($(TargetFrameworkVersionNumberVumowyv) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\TokenGenerator.exe</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\TsLibGen.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="TsLibGen" Condition="($(TargetFrameworkVersionNumberVumowyv) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\TsLibGen.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetContent Include="$(MSBuildThisFileDirectory)..\DotFiles\PsiTasks\ErrorDescription.xsd">
+      <TargetPath>PsiTasks\ErrorDescription.xsd</TargetPath>
+    </JetContent>
+    <JetContent Include="$(MSBuildThisFileDirectory)..\DotFiles\PsiTasks\Unicode.lex">
+      <TargetPath>PsiTasks\Unicode.lex</TargetPath>
+    </JetContent>
+    <JetMetadata Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Psi.Features.Tasks.JetMetadata.sstg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildThisFileDirectory)..\DotFiles\PsiTasks\TokenGenerator.Targets" />
+  <Import Project="$(MSBuildThisFileDirectory)..\DotFiles\PsiTasks\CsLex.Targets" />
+  <Import Project="$(MSBuildThisFileDirectory)..\DotFiles\PsiTasks\ErrorsGen.Targets" />
+  <Import Project="$(MSBuildThisFileDirectory)..\DotFiles\PsiTasks\JsLibGen.Targets" />
+  <Import Project="$(MSBuildThisFileDirectory)..\DotFiles\PsiTasks\TsLibGen.Targets" />
+  <Import Project="$(MSBuildThisFileDirectory)..\DotFiles\PsiTasks\PsiGen.Targets" />
+</Project>

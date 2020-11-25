@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "321459330834",
+    "project_id": "donorappmob"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321459330834:android:63a49bcde94bad04",
+        "android_client_info": {
+          "package_name": "com.donor.appmob"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "321459330834-dd8n2knfoo0mm2a82g5iliql9gk7iqrm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.donor.appmob",
+            "certificate_hash": "a61f4b370c057f29b48dbb99acf5ed51fef65b68"
+          }
+        },
+        {
+          "client_id": "321459330834-4kmlns8f05bj4b8t6hvdc6ce99o5k4fb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAsXV0pWb6rMGFNIE6BwHnkrTVK1fkbpA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetFrameworkVersionNumberVokohum Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*'))">$([MSBuild]::Add($([MSBuild]::Multiply($([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*', '$1')), 1000)), $([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*', '$2'))))</TargetFrameworkVersionNumberVokohum>
+    <TargetFrameworkVersionNumberVokohum Condition="'$(TargetFrameworkVersionNumberVokohum)' == ''">65535</TargetFrameworkVersionNumberVokohum>
+  </PropertyGroup>
+  <ItemGroup>
+    <JetMetadata Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.ReSharper.SDK.Internal.JetMetadata.sstg" />
+  </ItemGroup>
+</Project>

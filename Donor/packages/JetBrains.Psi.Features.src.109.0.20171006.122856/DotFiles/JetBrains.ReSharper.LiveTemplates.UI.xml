@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.LiveTemplates.UI</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.UI.MacroChooser.MacroChooserDialog">
+            <summary>
+            MacroChooserDialog
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.MacroChooser.MacroChooserDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.UI.MacroChooser.MacroChooserView">
+            <summary>
+            MacroChooserView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.MacroChooser.MacroChooserView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.UI.TemplateEditor.ConstantMacroParameterView">
+            <summary>
+            ConstantMacroParameterView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.TemplateEditor.ConstantMacroParameterView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.src.UI.TemplateEditor.FieldView">
+            <summary>
+            FieldView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.src.UI.TemplateEditor.FieldView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.UI.TemplateEditor.MultipleEditableOccurrenceView">
+            <summary>
+            MultipleEditableOccurrenceView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.TemplateEditor.MultipleEditableOccurrenceView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.UI.TemplateEditor.SingleEditableOccurrenceView">
+            <summary>
+            SingleEditableOccurrenceView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.TemplateEditor.SingleEditableOccurrenceView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.UI.SrcView.TemplateEditor.TemplateEditorViewControl">
+            <summary>
+            TemplateEditorViewControl
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.SrcView.TemplateEditor.TemplateEditorViewControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.src.UI.TemplateEditor.TemplateReferenceMappingView">
+            <summary>
+            TemplateReferenceMappingView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.src.UI.TemplateEditor.TemplateReferenceMappingView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.src.UI.TemplateEditor.TemplateReferenceSectionView">
+            <summary>
+            TemplateReferenceSectionView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.src.UI.TemplateEditor.TemplateReferenceSectionView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.UI.ToolWindow.TemplatesFilterPanel">
+            <summary>
+            Interaction logic for TemplatesFilterPanel.xaml
+            </summary>
+            <summary>
+            TemplatesFilterPanel
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.ToolWindow.TemplatesFilterPanel.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.UI.TemplateEditor.TypeMacroParameterView">
+            <summary>
+            TypeMacroParameterView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.TemplateEditor.TypeMacroParameterView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.src.UI.TemplateEditor.VariableMacroParameterView">
+            <summary>
+            VariableMacroParameterView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.src.UI.TemplateEditor.VariableMacroParameterView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.UI.CSharp.CSharpScopeConfig">
+            <summary>
+            Interaction logic for CSharpScopeConfig.xaml
+            </summary>
+            <summary>
+            CSharpScopeConfig
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.CSharp.CSharpScopeConfig.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Feature.Services.LiveTemplates.FileTemplates.EnterNameForm">
+            <summary>
+            Summary description for EnterNameForm.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.LiveTemplates.FileTemplates.EnterNameForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.UI.FieldsSelectionDialog">
+            <summary>
+            Summary description for FieldsSelectionDialog.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.LiveTemplates.UI.FieldsSelectionDialog.components">
+            <summary>Required designer variable.</summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.FieldsSelectionDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.FieldsSelectionDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.JavaScript.LiveTemplates.JavaScriptScopeConfig">
+            <summary>
+            Interaction logic for JavaScriptScopeConfig.xaml
+            </summary>
+            <summary>
+            JavaScriptScopeConfig
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.JavaScript.LiveTemplates.JavaScriptScopeConfig.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.Razor.RazorScopeConfig">
+            <summary>
+            Interaction logic for CSharpScopeConfig.xaml
+            </summary>
+            <summary>
+            RazorScopeConfig
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.Razor.RazorScopeConfig.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.UI.TemplateChooserDialog">
+            <summary>
+            Summary description for TemplateChooserDialog.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.LiveTemplates.UI.TemplateChooserDialog.components">
+            <summary>Required designer variable.</summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.TemplateChooserDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.TemplateChooserDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.LiveTemplates.UI.VB.VBScopeConfig">
+            <summary>
+            Interaction logic for CSharpScopeConfig.xaml
+            </summary>
+            <summary>
+            VBScopeConfig
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.LiveTemplates.UI.VB.VBScopeConfig.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>

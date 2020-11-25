@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetFrameworkVersionNumberXifijah Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*'))">$([MSBuild]::Add($([MSBuild]::Multiply($([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*', '$1')), 1000)), $([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*', '$2'))))</TargetFrameworkVersionNumberXifijah>
+    <TargetFrameworkVersionNumberXifijah Condition="'$(TargetFrameworkVersionNumberXifijah)' == ''">65535</TargetFrameworkVersionNumberXifijah>
+  </PropertyGroup>
+  <ItemGroup>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.Ide.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Platform.Tests.Framework.Ide" Condition="($(TargetFrameworkVersionNumberXifijah) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.Ide.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.ProjectDocuments.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Platform.Tests.Framework.ProjectDocuments" Condition="($(TargetFrameworkVersionNumberXifijah) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.ProjectDocuments.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.Projects.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Platform.Tests.Framework.Projects" Condition="($(TargetFrameworkVersionNumberXifijah) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.Projects.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.Shell.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Platform.Tests.Framework.Shell" Condition="($(TargetFrameworkVersionNumberXifijah) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.Shell.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.Symbols.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Platform.Tests.Framework.Symbols" Condition="($(TargetFrameworkVersionNumberXifijah) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.Symbols.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.TextControl.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Platform.Tests.Framework.TextControl" Condition="($(TargetFrameworkVersionNumberXifijah) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.TextControl.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetContent Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.Projects.dll.config">
+      <TargetPath>JetBrains.Platform.Tests.Framework.Projects.dll.config</TargetPath>
+    </JetContent>
+    <JetMetadata Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Tests.Framework.JetMetadata.sstg" />
+  </ItemGroup>
+</Project>

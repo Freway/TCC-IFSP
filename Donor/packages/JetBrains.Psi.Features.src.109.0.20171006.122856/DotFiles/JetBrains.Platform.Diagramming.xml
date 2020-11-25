@@ -1,0 +1,906 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Platform.Diagramming</name>
+    </assembly>
+    <members>
+        <member name="M:JetBrains.Diagramming.BuildScript.Compile.ObfuscateWhyWorksTransformSubplatformFilesForPackaging.HideOriginalAssembliesFromCataloging(JetBrains.Application.BuildScript.PackageReferenceArtifact[],JetBrains.Util.ILogger)">
+            <summary>
+            What this transform does is take assemblies from a referenced package, patch them, and embed into the subplatform. Normally we're getting two (inexact) copies of such assemblies, the original and the patched. This yields an instruction to ignore the original.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Diagramming.Wrapper.YFilesGraphWrapperBase.RefreshLayoutIncremental">
+            <summary>
+            Relayouts the whole graph
+            </summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Wrapper.CustomMouseHoverInputMode.OnHide">
+            <summary>
+              Called when the tooltip should be hidden.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Wrapper.ItemHoverInputMode">
+            <summary>
+            Input mode that fires an event if the mouse enters or leaves a 
+            <see cref="T:yWorks.Canvas.Model.IModelItem">graph item</see> and no mouse button is 
+            currently pressed.
+            </summary>
+        </member>
+        <member name="E:JetBrains.Diagramming.Wrapper.ItemHoverInputMode.ItemHover">
+            <summary>
+            An event that is fired if a graph item is hovered with the mouse pointer.
+            </summary>
+            <remarks>
+            Also fires when the mouse pointer leaves an item.
+            </remarks>
+        </member>
+        <member name="P:JetBrains.Diagramming.Wrapper.ItemHoverInputMode.HoverItems">
+            <summary>
+            Gets or sets which graph items are considered by this input mode.
+            </summary>
+            <remarks>
+            The default is <see cref="F:yWorks.yFiles.UI.Model.GraphItemTypes.All"/>.
+            </remarks>
+        </member>
+        <member name="P:JetBrains.Diagramming.Wrapper.MouseHoverEventArgs.Item">
+            <summary>
+            The item that is hovered, or null.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Diagramming.Wrapper.MouseHoverEventArgs.OldItem">
+            <summary>
+            The item that was previously hovered, or null.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Wrapper.MyReparentNodeHandler">
+            <summary>
+            Customized variant of the <see cref="T:yWorks.yFiles.UI.Input.IReparentNodeHandler"/>
+            interface that uses the <see cref="T:yWorks.Support.ITagOwner"/> tags associated with the nodes
+            to determine which reparenting operations are allowed.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Wrapper.MyReparentNodeHandler.CanReparent(yWorks.Canvas.Input.IInputModeContext,yWorks.yFiles.UI.Model.INode)">
+            <summary>
+            Determines whether the user may detach the given node from its current parent in 
+            order to reparent it.
+            </summary>
+            <param name="context">The context that provides information about the user input.</param>
+            <param name="node">The node that is about to be detached from its current parent.</param>
+            <returns>Whether the node may be detached and reparented.</returns>
+        </member>
+        <member name="M:JetBrains.Diagramming.Wrapper.MyReparentNodeHandler.IsValidParent(yWorks.Canvas.Input.IInputModeContext,yWorks.yFiles.UI.Model.INode,yWorks.yFiles.UI.Model.INode)">
+            <summary>
+            Determines whether the provided node may be reparented to a <paramref name="newParent">new parent</paramref>.
+            </summary>
+            <param name="context">The context that provides information about the user input.</param>
+            <param name="node">The node that will be reparented.</param>
+            <param name="newParent">The potential new parent.</param>
+            <returns>Whether <paramref name="newParent"/> is a valid new parent for <paramref name="node"/>.</returns>
+        </member>
+        <member name="T:JetBrains.Diagramming.Wrapper.UI.GraphControlWindowBase">
+            <summary>
+            GraphControlWindowBase
+            </summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Wrapper.UI.GraphControlWindowBase.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Wrapper.UI.NavigationArrows">
+            <summary>
+            NavigationArrows
+            </summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Wrapper.UI.NavigationArrows.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons">
+             <summary>
+            	<para>
+            		<para>Autogenerated identifier classes and identifier objects to Themed Icons registered with <see cref="T:JetBrains.Application.Icons.IThemedIconManager"></see>.</para>
+            		<para>Identifier classes should be used in attributes, XAML, or generic parameters. Where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected, use the identifier object in the <c>Id</c> field of the identifier class.</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>This code was compile-time generated to support Themed Icons in the JetBrains application.</para>
+            	<para>It has two primary goals: load the icons of this assembly to be registered with <see cref="T:JetBrains.Application.Icons.IThemedIconManager"></see> so that they were WPF-accessible and theme-sensitive; and emit early-bound accessors for referencing icons in codebehind in a compile-time-validated manner.</para>
+            	<h1>XAML</h1>
+            	<para>For performance reasons, the icons are not individually exposed with application resources. There is a custom markup extension to bind an image source in markup.</para>
+            	<para>To use an icon from XAML, set an <see cref="T:System.Windows.Media.ImageSource"></see> property to the <see cref="T:System.CodeDom.CodeTypeReference"></see> markup extension, which takes an icon identifier class (nested in <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons"></see> class) as a parameter.</para>
+            	<para>Example:</para>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+Trinity}" /&gt;</code>
+            	<h1>Attributes</h1>
+            	<para>Sometimes you have to reference an icon from a type attriute when you're defining objects in code. Typical examples are Options pages and Tool Windows.</para>
+            	<para>To avoid the use of string IDs which are not validated very well, we've emitted identifier classes to be used with <c>typeof()</c> expression, one per each icon. Use the attribute overload which takes a <see cref="T:System.Type"></see> for an image, and choose your icon class from nested classes in the <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons"></see> class.</para>
+            	<para>Example:</para>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.Trinity))]</code>
+            	<h1>CodeBehind</h1>
+            	<para>In codebehind, we have two distinct tasks: (a) specify some icon in the APIs and (b) render icon images onscreen.</para>
+            	<para>On the APIs stage you should only manipulate icon identifier objects (of type <see cref="T:JetBrains.UI.Icons.IconId"></see>, statically defined in <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons"></see> in <c>Id</c> fields). Icon identifier classes (nested in <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons"></see>) should be turned into icon identifier objects as early as possible. Rendering is about getting an <see cref="T:System.Windows.Media.ImageSource"></see> to assign to WPF, or <see cref="T:System.Drawing.Bitmap"></see> to use with GDI+ / Windows Forms.</para>
+            	<para>You should turn an identifier object into a rendered image as late as possible. The identifier is static and lightweight and does not depend on the current theme, while the image is themed and has to be loaded or generated/rasterized. You need an <see cref="T:JetBrains.Application.Icons.IThemedIconManager"></see> instance to get the image out of an icon identifier object. Once you got the image, you should take care to change it with theme changes — either by using a live image property, or by listening to the theme change event. See <see cref="T:JetBrains.Application.Icons.IThemedIconManager"></see> and its extensions for the related facilities.</para>
+            	<para>Example:</para>
+            	<code>// Getting IconId identifier object to use with APIs
+            IconId iconid = DiagrammingThemedIcons.Trinity.Id;</code>
+            	<code>// Getting IconId out of an Icon Identifier Class type
+            IconId iconid = new JetBrains.Application.Icons.CompiledIconsCs.CompiledIconCsId(typeof(DiagrammingThemedIcons.Trinity));</code>
+            	<code>// Getting image for screen rendering by IconId
+            themediconmanager.Icons[icnoid]</code>
+            	<code>// Getting image for screen rendering by Icon Identifier Class
+            themediconmanager.GetIcon&lt;DiagrammingThemedIcons.Trinity&gt;()</code>
+            	<h1>Icons Origin</h1>
+            	<para>This code was generated by a pre-compile build task from a set of input files which are XAML files adhering to a certain convention, as convenient for exporting them from the Illustrator workspace, plus separate PNG files with raster icons. In the projects, these files are designated with <c>ThemedIconsXamlV3</c> and <c>ThemedIconPng</c> build actions and do not themselves get into the output assembly. All of such files are processed, vector images for different themes of the same icon are split and combined into the single list of icons in this assembly. This list is then written into the genearted XAML file (compiled into BAML within assembly), and serves as the source for this generated code.</para>
+            </remarks>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollDown">
+             <summary>
+            	<para>
+            		<para>ArchScrollDown Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollDown"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollDown.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+                                             
+                                             
+                                             
+                   LLL~`          `"?LL      
+                   cc.!c~`      `"L!.cc      
+                   ||  -\)~`  `^c\-  ||      
+                   TT    -+T=~|+-    TT      
+                   77``````_rr_``````77      
+                   !i\-............-\i*      
+                    ./l+_''''''''_+l+'       
+                      .\}r,----,r}r-         
+                        .*FL^^LFr-           
+                          .+11?-             
+                                             
+                                             
+                                             
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+ArchScrollDown}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.ArchScrollDown))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.ArchScrollDown.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.ArchScrollDown&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollDown.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollDown">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollDown.Load_Color">
+            <summary>Loads the image for Themed Icon ArchScrollDown theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollDown.Load_Gray">
+            <summary>Loads the image for Themed Icon ArchScrollDown theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollDown.Load_GrayDark">
+            <summary>Loads the image for Themed Icon ArchScrollDown theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollDown.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon ArchScrollDown.</summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollUp">
+             <summary>
+            	<para>
+            		<para>ArchScrollUp Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollUp"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollUp.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+                                             
+                                             
+                                             
+                          `"?L~`             
+                        `"L!..!c~`           
+                      `^c\-    -\)~`         
+                    `~|+-        -+T=`       
+                   ~Tr_````````````_rT=      
+                   ii......-\\-......ii      
+                   ll''''_+l+/l+_''''ll      
+                   }}--,r}r-  .\}r,--}}      
+                   FF^LFr-      .*FL^FF      
+                   111?-          .+111      
+                                             
+                                             
+                                             
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+ArchScrollUp}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.ArchScrollUp))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.ArchScrollUp.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.ArchScrollUp&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollUp.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollUp">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollUp.Load_Color">
+            <summary>Loads the image for Themed Icon ArchScrollUp theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollUp.Load_Gray">
+            <summary>Loads the image for Themed Icon ArchScrollUp theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollUp.Load_GrayDark">
+            <summary>Loads the image for Themed Icon ArchScrollUp theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ArchScrollUp.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon ArchScrollUp.</summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.CollapseGraph">
+             <summary>
+            	<para>
+            		<para>CollapseGraph Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.CollapseGraph"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.CollapseGraph.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+                                             
+                 EEEEEEEEEEEEEEEEEEEEEEEEEE  
+                 UU                      UU  
+                 66  ,,,,,,,,,,,,,,,,,,  66  
+                 ww``__XXXXXX__XXXXXX__``ww  
+                 dd``--OO  OO--OO  OO--``dd  
+                 GG``..888888..888888..``GG  
+                 OO..``````````````````..OO  
+                 RR..``XXXXXX``XXXXXX``..RR  
+                 DD--  OO  OO  OO  OO  --DD  
+                 DD--  888888  888888  --DD  
+                 88--                  --88  
+                 %%______________________%%  
+                 NNNNNNNNNNNNNNNNNNNNNNNNNN  
+                                             
+                                             
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+CollapseGraph}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.CollapseGraph))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.CollapseGraph.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.CollapseGraph&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.CollapseGraph.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.CollapseGraph">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.CollapseGraph.Load_Color">
+            <summary>Loads the image for Themed Icon CollapseGraph theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.CollapseGraph.Load_Gray">
+            <summary>Loads the image for Themed Icon CollapseGraph theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.CollapseGraph.Load_GrayDark">
+            <summary>Loads the image for Themed Icon CollapseGraph theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.CollapseGraph.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon CollapseGraph.</summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ExpandGraph">
+             <summary>
+            	<para>
+            		<para>ExpandGraph Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ExpandGraph"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ExpandGraph.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+             PPPPPPPPPPPPPP    PPPPPPPPPPPPPP
+             44          44    44          44
+             dd``------``dd6666dd``------``dd
+             OO..``````..OO    OO..``````..OO
+             DD--      --DD8888DD--      --DD
+             88__________88    88__________88
+             WWWWWWWWWWWWWW    WWWWWWWWWWWWWW
+                 99  99            99  99    
+                 DD  DD            DD  DD    
+             PPPPPPPPPPPPPP    PPPPPPPPPPPPPP
+             44          44    44          44
+             dd``------``dd6666dd``------``dd
+             OO..``````..OO    OO..``````..OO
+             DD--      --DD8888DD--      --DD
+             88__________88    88__________88
+             WWWWWWWWWWWWWW    WWWWWWWWWWWWWW
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+ExpandGraph}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.ExpandGraph))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.ExpandGraph.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.ExpandGraph&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ExpandGraph.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ExpandGraph">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ExpandGraph.Load_Color">
+            <summary>Loads the image for Themed Icon ExpandGraph theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ExpandGraph.Load_Gray">
+            <summary>Loads the image for Themed Icon ExpandGraph theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ExpandGraph.Load_GrayDark">
+            <summary>Loads the image for Themed Icon ExpandGraph theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ExpandGraph.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon ExpandGraph.</summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.GraphDiff">
+             <summary>
+            	<para>
+            		<para>GraphDiff Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.GraphDiff"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.GraphDiff.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+             EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+             UU        UU        UU        UU
+             66``----``66``----``66``----``66
+             bb..    ..bb..    ..bb..    ..bb
+             HH--------HH--------HH--------HH
+             OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+             RR        RR        RR        RR
+             DD``----``DD``----``DD``----``DD
+             88..    ..88..    ..88..    ..88
+             88--------88--------88--------88
+             MMMMMMMMMMRRRRRRRRRRRRRRRRRRRRRR
+                       DD........DD........DD
+                       88--____--88--____--88
+                       MM__    __MM__    __MM
+                       $$::::::::$$::::::::$$
+                       QQQQQQQQQQQQQQQQQQQQQQ
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+GraphDiff}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.GraphDiff))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.GraphDiff.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.GraphDiff&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.GraphDiff.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.GraphDiff">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.GraphDiff.Load_Color">
+            <summary>Loads the image for Themed Icon GraphDiff theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.GraphDiff.Load_Gray">
+            <summary>Loads the image for Themed Icon GraphDiff theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.GraphDiff.Load_GrayDark">
+            <summary>Loads the image for Themed Icon GraphDiff theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.GraphDiff.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon GraphDiff.</summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.MetricDisplay">
+             <summary>
+            	<para>
+            		<para>MetricDisplay Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.MetricDisplay"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.MetricDisplay.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+                         "\)tj665{)+^        
+                      ^lRZr="-``-,=+yRC~     
+                    +#X+-            ./EDT`  
+                  `6D\  ``````````````  =RG' 
+                 `w8~`````'ZD``.tiot-````,DO`
+                 L%|`````-XT8``````a}`````/%}
+                 6M".```_O;~M`````.9T````.-MD
+                 bN,-..~R!.~$....-oI.....--N8
+                 70)--'NRuukQu_'"Hc'''''--+02
+                 ,$8__-----=g--+$Gooo---_~D8-
+                `DN!:::_--------------_:*D%: 
+               `O$L"""""",___----___,^cX$k'  
+              `6Qi^^^^^^=?TL*;^^=*LiX$Hc'    
+              SQI~~~\lkDQHu6RMQQ%Ok1r'       
+             CgP)ub$$kc"`                    
+             gggD3/-                         
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+MetricDisplay}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.MetricDisplay))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.MetricDisplay.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.MetricDisplay&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.MetricDisplay.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.MetricDisplay">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.MetricDisplay.Load_Color">
+            <summary>Loads the image for Themed Icon MetricDisplay theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.MetricDisplay.Load_Gray">
+            <summary>Loads the image for Themed Icon MetricDisplay theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.MetricDisplay.Load_GrayDark">
+            <summary>Loads the image for Themed Icon MetricDisplay theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.MetricDisplay.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon MetricDisplay.</summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.PossiblePaths">
+             <summary>
+            	<para>
+            		<para>PossiblePaths Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.PossiblePaths"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.PossiblePaths.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+             EEEEEEEEEEEEEE                  
+             XX  EE  EE  XX      EEEEEEEEEE  
+             ww9999999999wwXXXXXX99      99  
+             GG``GGGGGG``GG``GG``GG``````GG  
+             RRDDDDDDDDDDRRDDDDDDDD''''''DD  
+             DD--88--88--DD      8888888888  
+             %%%%%%%%%%%%%%        DD__DD    
+                 bb  bb           .D#_,DA    
+                 RRRRRR           |Dt_+DC    
+                 88''88         `}Dl:~bA'    
+               EEEEEEEEEE   `-~}mE+_!bA_     
+               99      99DDDdZ5|~,+oDt.      
+               GG``````GG___^=/ru#S+.        
+               DD''''''DDDDDwSCT/.           
+               8888888888                    
+                                             
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+PossiblePaths}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.PossiblePaths))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.PossiblePaths.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.PossiblePaths&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.PossiblePaths.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.PossiblePaths">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.PossiblePaths.Load_Color">
+            <summary>Loads the image for Themed Icon PossiblePaths theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.PossiblePaths.Load_Gray">
+            <summary>Loads the image for Themed Icon PossiblePaths theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.PossiblePaths.Load_GrayDark">
+            <summary>Loads the image for Themed Icon PossiblePaths theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.PossiblePaths.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon PossiblePaths.</summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.SaveGraph">
+             <summary>
+            	<para>
+            		<para>SaveGraph Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.SaveGraph"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.SaveGraph.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+                 IIIIIIIIIIIIIIIIIIIIII1/`   
+                 uu~~~~~~``````tttt``~~*tu/` 
+                 jj~~~~~~``````tttt``~~~~+Yo*
+                 aa~~~~~~``````tttt``~~~~~~aa
+                 VV~~~~~~````````````~~~~~~VV
+                 EE======............======EE
+                 UU========================UU
+             EEEEEEEEEEEEEEEEEE============66
+             XX``````XX``````XX        ====ww
+             99``DD``99``DD``99        ====bb
+             HH------HH------HH        ====GG
+             AAAAAAAAAAAAAAAAAA        ====##
+             RR``````RR``````RR--------====RR
+             DD``DD``DD``DD``DDDDDDDDDDDDDDDD
+             88------88------88              
+             WWWWWWWWWWWWWWWWWW              
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+SaveGraph}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.SaveGraph))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.SaveGraph.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.SaveGraph&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.SaveGraph.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.SaveGraph">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.SaveGraph.Load_Color">
+            <summary>Loads the image for Themed Icon SaveGraph theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.SaveGraph.Load_Gray">
+            <summary>Loads the image for Themed Icon SaveGraph theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.SaveGraph.Load_GrayDark">
+            <summary>Loads the image for Themed Icon SaveGraph theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.SaveGraph.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon SaveGraph.</summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollLeft">
+             <summary>
+            	<para>
+            		<para>ScrollLeft Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollLeft"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollLeft.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+                                             
+                                             
+                                             
+                          `"ccccccccccc      
+                        `^c\-      `=|!      
+                      `~|+-      .;T/.       
+                    `~Tr_``````-!7/'         
+                   ~7r,``````-/i+'           
+                   /l+_......"LJ;`           
+                    ./tr,------~)t!`         
+                      .+FL"______=T{!`       
+                        .+xc~::::::;zC!      
+                          .+IIIIIIIIIII      
+                                             
+                                             
+                                             
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+ScrollLeft}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.ScrollLeft))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.ScrollLeft.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.ScrollLeft&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollLeft.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollLeft">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollLeft.Load_Color">
+            <summary>Loads the image for Themed Icon ScrollLeft theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollLeft.Load_Gray">
+            <summary>Loads the image for Themed Icon ScrollLeft theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollLeft.Load_GrayDark">
+            <summary>Loads the image for Themed Icon ScrollLeft theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollLeft.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon ScrollLeft.</summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollRight">
+             <summary>
+            	<para>
+            		<para>ScrollRight Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollRight"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollRight.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+                                             
+                                             
+                                             
+                   ccccccccccc~`             
+                   =|=`      -\)~`           
+                    `;T;.      -+T=`         
+                      `!7!-``````_r7=`       
+                        `!i/-``````,rs=      
+                        `~sL"......_+l+      
+                      `=l)~------,rt+-       
+                    `=}T=______"LFr-         
+                   =Fz;::::::~cxr-           
+                   IIIIIIIIIIIL-             
+                                             
+                                             
+                                             
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+ScrollRight}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.ScrollRight))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.ScrollRight.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.ScrollRight&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollRight.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollRight">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollRight.Load_Color">
+            <summary>Loads the image for Themed Icon ScrollRight theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollRight.Load_Gray">
+            <summary>Loads the image for Themed Icon ScrollRight theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollRight.Load_GrayDark">
+            <summary>Loads the image for Themed Icon ScrollRight theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ScrollRight.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon ScrollRight.</summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.TransitiveEdges">
+             <summary>
+            	<para>
+            		<para>TransitiveEdges Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.TransitiveEdges"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.TransitiveEdges.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+                                             
+               EEEEEEEEEE        EEEEEEEEEE  
+               44      44ZZZZZZZZ44      44  
+               GG``````GG````````GG``````GG  
+               DD''''''DD88888888DD''''''DD  
+               8888888888        8888888888  
+                 KK  KK            OO``OO    
+                 bb``bb           `R#`'RH    
+                 RR``RR           TD}./Dx    
+                 88--88         `18{-"RR'    
+               EEEEEEEEEE   `-=38b+-!DD_     
+               44      440008#6l~:?Z0a'      
+               GG``````GG___^!+TUBbL'        
+               DD''''''DDQQQ8GV[r'           
+               8888888888                    
+                                             
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+TransitiveEdges}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.TransitiveEdges))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.TransitiveEdges.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.TransitiveEdges&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.TransitiveEdges.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.TransitiveEdges">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.TransitiveEdges.Load_Color">
+            <summary>Loads the image for Themed Icon TransitiveEdges theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.TransitiveEdges.Load_Gray">
+            <summary>Loads the image for Themed Icon TransitiveEdges theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.TransitiveEdges.Load_GrayDark">
+            <summary>Loads the image for Themed Icon TransitiveEdges theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.TransitiveEdges.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon TransitiveEdges.</summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomIn">
+             <summary>
+            	<para>
+            		<para>ZoomIn Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomIn"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomIn.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+                                             
+                                             
+                                             
+                         IIIIIIII            
+                         xx    xx            
+                         FF    FF            
+                   tttttttt````tttttttt      
+                   ll````````````````ll      
+                   ii................ii      
+                   77777777----77777777      
+                         TT____TT            
+                         ||::::||            
+                         cccccccc            
+                                             
+                                             
+                                             
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+ZoomIn}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.ZoomIn))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.ZoomIn.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.ZoomIn&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomIn.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomIn">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomIn.Load_Color">
+            <summary>Loads the image for Themed Icon ZoomIn theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomIn.Load_Gray">
+            <summary>Loads the image for Themed Icon ZoomIn theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomIn.Load_GrayDark">
+            <summary>Loads the image for Themed Icon ZoomIn theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomIn.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon ZoomIn.</summary>
+        </member>
+        <member name="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomOut">
+             <summary>
+            	<para>
+            		<para>ZoomOut Themed Icon generated identifiers:</para>
+            		<para>— <see cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomOut"></see> identifier class, for use in attributes, XAML, and generic parameters;</para>
+            		<para>— <see cref="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomOut.Id"></see> identifier object, as a field in the identifier class, for use where an <see cref="T:JetBrains.UI.Icons.IconId"></see> value is expected.</para>
+            		<para>
+            			<code>
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                   }}}}}}}}}}}}}}}}}}}}      
+                   ii                ii      
+                   ||''''''''''''''''||      
+                   LLLLLLLLLLLLLLLLLLLL      
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+            </code>
+            		</para>
+            	</para>
+            </summary>
+            <remarks>
+            	<para>For details on Themed Icons and their use, see Remarks on the outer class.</para>
+            </remarks>
+            <example>
+            	<code>&lt;Image Source="{icons:ThemedIcon myres:DiagrammingThemedIcons+ZoomOut}" /&gt;        &lt;!-- XAML --&gt;</code>
+            </example>
+            <example>
+            	<code>[Item(Name="Sample", Icon=typeof(DiagrammingThemedIcons.ZoomOut))]        // C# Type attribute</code>
+            </example>
+            <example>
+            	<code>IconId iconid = DiagrammingThemedIcons.ZoomOut.Id;        // IconId identifier object</code>
+            </example>
+            <example>
+            	<code>themediconmanager.GetIcon&lt;DiagrammingThemedIcons.ZoomOut&gt;()        // Icon image for rendering</code>
+            </example>
+        </member>
+        <member name="F:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomOut.Id">
+            <inheritdoc cref="T:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomOut">identifier class</inheritdoc>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomOut.Load_Color">
+            <summary>Loads the image for Themed Icon ZoomOut theme aspect Color.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomOut.Load_Gray">
+            <summary>Loads the image for Themed Icon ZoomOut theme aspect Gray.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomOut.Load_GrayDark">
+            <summary>Loads the image for Themed Icon ZoomOut theme aspect GrayDark.</summary>
+        </member>
+        <member name="M:JetBrains.Diagramming.Resources.DiagrammingThemedIcons.ZoomOut.GetThemeImages">
+            <summary>Returns the set of theme images for Themed Icon ZoomOut.</summary>
+        </member>
+    </members>
+</doc>

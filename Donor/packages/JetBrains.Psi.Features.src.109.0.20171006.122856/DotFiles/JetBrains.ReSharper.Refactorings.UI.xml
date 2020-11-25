@@ -1,0 +1,871 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.ReSharper.Refactorings.UI</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.EnumToComboControl">
+            <summary>
+            EnumToComboControl
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.EnumToComboControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.PropertyToRadioControl">
+            <summary>
+            Interaction logic for PropertyToRadioControl.xaml
+            </summary>
+            <summary>
+            PropertyToRadioControl
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.PropertyToRadioControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.RefactoringsListControl">
+            <summary>
+            RefactoringsListControl
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.RefactoringsListControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.AdjustNamespacesWindow">
+            <summary>
+            AdjustNamespacesWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.AdjustNamespacesWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.AnonymousToDeclaredWindow">
+            <summary>
+            AnonymousToDeclaredWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.AnonymousToDeclaredWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ConflictsToolWindow">
+            <summary>
+            Summary description for ConflictsPage.
+            </summary>
+            <summary>
+            ConflictsToolWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ConflictsToolWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.RenameOverloadsWindow">
+            <summary>
+            RenameOverloadsWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.RenameOverloadsWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.SafeDelete2TypeElement">
+            <summary>
+            SafeDelete2TypeElement
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.SafeDelete2TypeElement.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.ExtractMethodOptionsPagePanel.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.ExtractMethodOptionsPagePanel.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.ExtractMethodOptionsPagePanel.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.RefactoringNotificationControl">
+            <summary>
+            Interaction logic for RefactoringNotificationControl.xaml
+            </summary>
+            <summary>
+            RefactoringNotificationControl
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.RefactoringNotificationControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.BulkRenameWindow">
+            <summary>
+            BulkRenameWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.BulkRenameWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.ChangeSignatureWindow.InitializeComponent">
+            <summary>
+                Required method for Designer support - do not modify
+                the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ConflictsWindow">
+            <summary>
+            ConflictsWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ConflictsWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ConstructorToFactoryMethodWindow">
+            <summary>
+            ConstructorToFactoryMethodWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ConstructorToFactoryMethodWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.CopyTypeWindow">
+            <summary>
+            CopyTypeWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.CopyTypeWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.CustomTextPresentationControl">
+            <summary>
+            CustomTextPresentationControl
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.CustomTextPresentationControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.DefaultParameterValueWindow.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.DefaultParameterValueWindow.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.DefaultParameterValueWindow.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.DependentMembersControlWpf">
+            <summary>
+            DependentMembersControlWpf
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.DependentMembersControlWpf.MembersList">
+            <summary>
+            MembersList Name Field
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.DependentMembersControlWpf.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.EncapsulateFieldWindow">
+            <summary>
+            EncapsulateFieldWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.EncapsulateFieldWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ExistingClassTuningWindow">
+            <summary>
+            ExistingClassTuningWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ExistingClassTuningWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ExtractClassWindow">
+            <summary>
+            ExtractClassWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ExtractClassWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.ExtractMethodPage.components">
+            <summary>Required designer variable.</summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.ExtractMethodPage.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.ExtractMethodPage.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.ExtractStyleWindow.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.ExtractStyleWindow.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.ExtractStyleWindow.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.IntroFieldWindow.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.IntroFieldWindow.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.IntroFieldWindow.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MoveToFileWindow">
+            <summary>
+            MoveToFileWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MoveToFileWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.MoveStyleWindow.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.MoveStyleWindow.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.MoveStyleWindow.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.MoveToFolderPageControl.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.MoveToFolderPageControl.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.MoveToFolderPageControl.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.RenameNamespaceWindow">
+            <summary>
+            RenameNamespaceWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.RenameNamespaceWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ExtractParentWindow">
+            <summary>
+            ExtractParentWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ExtractParentWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.FunctionToPropertyWindow">
+            <summary>
+            FunctionToPropertyWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.FunctionToPropertyWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.InlineMethodWindow">
+            <summary>
+            InlineMethodWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.InlineMethodWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.InlineParameterWindow">
+            <summary>
+            InlineParameterWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.InlineParameterWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.IntroduceParameterWindow">
+            <summary>
+            IntroduceParameterWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.IntroduceParameterWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.InvertBoolWindow">
+            <summary>
+            InvertBoolWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.InvertBoolWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MakeNonStaticWindow">
+            <summary>
+            MakeNonStaticWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MakeNonStaticWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MakeStaticWindow">
+            <summary>
+            MakeStaticWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MakeStaticWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MoveInstanceWindow">
+            <summary>
+            MoveInstanceWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MoveInstanceWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MoveIntoMatchingFIlesWindow">
+            <summary>
+            MoveIntoMatchingFIlesWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MoveIntoMatchingFIlesWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MoveStaticWindow">
+            <summary>
+            MoveStaticWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MoveStaticWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MoveToNamespaceWindow">
+            <summary>
+            MoveToNamespaceWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MoveToNamespaceWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MoveTypeToOuterWindow">
+            <summary>
+            MoveTypeToOuterWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.MoveTypeToOuterWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.NameSuggestionTreeView">
+            <summary>
+            Interaction logic for NameSuggestionTreeView.xaml
+            </summary>
+            <summary>
+            NameSuggestionTreeView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.NameSuggestionTreeView.#ctor">
+            <summary>
+            Dont use this constructor, it's for XAML designer compatability only
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.NameSuggestionTreeView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ParametersCheckList">
+            <summary>
+            ParametersCheckList
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.ParametersCheckList.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.PropertyToFunctionWindow">
+            <summary>
+            PropertyToFunctionWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.PropertyToFunctionWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.PullParameterTreeGridView">
+            <summary>
+              Interaction logic for PullParameterTreeGridView.xaml
+            </summary>
+            <summary>
+            PullParameterTreeGridView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.PullParameterTreeGridView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.PullParameterTreeView">
+            <summary>
+            PullParameterTreeView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.PullParameterTreeView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.PullToolView">
+            <summary>
+            Interaction logic for PullToolView.xaml
+            </summary>
+            <summary>
+            PullToolView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.PullToolView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.TypeReferencePresentation">
+            <summary>
+              Interaction logic for CheckTypeUsagesPage.xaml
+            </summary>
+            public class InheritorPresentation
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.PullTypeParameterThroughHierarchyView">
+            <summary>
+            PullTypeParameterThroughHierarchyView
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.PullTypeParameterThroughHierarchyView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.PullUpDownWindow">
+            <summary>
+            PullUpDownWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.PullUpDownWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.RelatedNamesSuggestionControl">
+            <summary>
+            Interaction logic for RelatedNamesSuggestionControl.xaml
+            </summary>
+            <summary>
+            RelatedNamesSuggestionControl
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.RelatedNamesSuggestionControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.RenameDerivedElementsWindow">
+            <summary>
+            RenameDerivedElementsWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.RenameDerivedElementsWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.RenameFileWindow">
+            <summary>
+            RenameFileWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.RenameFileWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.SafeDeleteFolderWindow">
+            <summary>
+            SafeDeleteFolderWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.SafeDeleteFolderWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.SafeDeletePageOverridableMember.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.SafeDeletePageOverridableMember.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.SafeDeletePageOverridableMember.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.SafeDeletePageReplaceTypeUsages.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.SafeDeletePageReplaceTypeUsages.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.SafeDeletePageReplaceTypeUsages.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.TransformParametersWindow">
+            <summary>
+            TransformParametersWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.TransformParametersWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.Type2PartialWindow">
+            <summary>
+            Type2PartialWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.Type2PartialWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.SafeDeleteRemoveFilesConfirmation">
+            <summary>
+            SafeDeleteRemoveFilesConfirmation
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.SafeDeleteRemoveFilesConfirmation.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.TypeSuggestionWindow.components">
+            <summary>Required designer variable.</summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.TypeSuggestionWindow.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.WinFormsControls.TypeSuggestionWindow.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.UseBaseTypeWindow">
+            <summary>
+            UseBaseTypeWindow
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWindows.UseBaseTypeWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm">
+            <summary>
+            Summary description for RefactoringWizardForm.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.ContentContinueEnabled">
+            <summary>
+            Binds to the <see cref="P:JetBrains.ReSharper.Feature.Services.Refactorings.IRefactoringPage.ContinueEnabled"/> of the current <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.Content"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myBorderedBottom">
+            <summary>
+            On <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myGridBody"/>, hosts <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myGridNavigation"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myBorderedTop">
+            <summary>
+            On <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myGridBody"/>, hosts <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myHeading"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myBtnBack">
+            <summary>
+            On <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myGridNavigation"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myBtnCancel">
+            <summary>
+            On <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myGridNavigation"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myBtnContinue">
+            <summary>
+            On <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myGridNavigation"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myCheckBoxOpenFiles">
+            <summary>
+            On <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myGridNavigation"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myGridBody">
+            <summary>
+            The body vert stack-panel that spans the whole dialog client area. Lives on <see cref="T:System.Windows.Forms.Form"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myGridNavigation">
+            <summary>
+            The bottom horz stack-panel with checkbox and the buttons. Lives on <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myBorderedBottom"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myHeading">
+            <summary>
+            Heading, on <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myBorderedTop"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myPanelContent">
+            <summary>
+            A panel that hosts the UI content provided by refactoriPulPngs. Lives in <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myGridBody"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myProgress">
+            <summary>
+            Progress at the bottom, on <see cref="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.myGridBody"/>.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.Content">
+            <summary>
+            The page displayed in the dialog, or <c>Null</c> before any is assigned.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.RunningTaskExecutor">
+            <summary>
+            While a task executor is in use, displays its instance.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.CreateTaskExecutor_AttachUi(JetBrains.DataFlow.Lifetime,JetBrains.Application.Progress.IProgressIndicatorModel)">
+            <summary>
+            When a task executor is created, binds its status to the dialog UI.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.InitControls_LoadSaveLocationSettings(JetBrains.DataFlow.Lifetime,System.Windows.Forms.IWin32Window,JetBrains.Application.Settings.ISettingsStore)">
+            <summary>
+            Persists window position.
+            The idea is:
+            (1) The position is relative to the owner window (main window, or tab well if floating).
+            (2) The position is of the title bar center (top-center point of the window), because the window width/height depends on the refactoring control.
+            </summary>
+        </member>
+        <member name="P:JetBrains.ReSharper.Refactorings.UI.CommonUI.RefactoringWizardForm.IsBusy">
+            <summary>
+            Gets or sets whether the workflow is currently running some process, so that the navigation buttons should be disabled.
+            </summary>
+        </member>
+        <member name="F:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.SizedControl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.SizedControl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.SizedControl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.TextBoxWithError">
+            <summary>
+            TextBoxWithError
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.TextBoxWithError.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.TwoSidedMembersControl">
+            <summary>
+            TwoSidedMembersControl
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Refactorings.UI.CommonUI.CommonControls.TwoSidedMembersControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Refactorings.UI.CommonUI.WorkflowHostWithWizardForm">
+            <summary>
+            Runs refactoring on the refactoring wizard form...
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>

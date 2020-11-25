@@ -1,0 +1,32 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <JetTestProject Condition="'$(JetTestProject)' == ''">False</JetTestProject>
+    <JetReferencesPrivate Condition="'$(JetReferencesPrivate)' == '' AND '$(JetTestProject)' == 'True'">True</JetReferencesPrivate>
+    <JetReferencesPrivate Condition="'$(JetReferencesPrivate)' == ''">False</JetReferencesPrivate>
+  </PropertyGroup>
+  
+  <Target Name="CopyJetContent" Condition="'$(JetTestProject)' == 'True'" BeforeTargets="PrepareForRun">
+    <Copy SourceFiles="@(JetContent)" DestinationFiles="@(JetContent->'$(OutDir)\%(TargetPath)')" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
+  </Target>
+
+  <Target Name="CopyJetMetadata" Condition="'$(JetTestProject)' == 'True'" BeforeTargets="PrepareForRun">
+    <Copy SourceFiles="@(JetMetadata)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
+  </Target>
+
+  <Target Name="CopyJetReference" Condition="'$(JetTestProject)' == 'True'" BeforeTargets="PrepareForRun">
+    <Copy SourceFiles="@(JetReference)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
+  </Target>
+
+  <UsingTask TaskName="JetBrains.Platform.SDK.Helper.InstalledProductsDiscoveryTask" AssemblyFile="JetBrains.Platform.SDK.Helper.dll" />
+
+  <Target Name="CopyPlugin" AfterTargets="AfterBuild" Condition="'$(HostFullIdentifier)' != ''">
+    <InstalledProductsDiscoveryTask HostFullIdentifier="$(HostFullIdentifier)"
+                                    Assembly="JetBrains.Platform.SDK.MsBuild" Type="JetBrains.Platform.SDK.MsBuild.InstalledProductsDiscoveryTask" References="@(ReferencePath)">
+      <Output TaskParameter="Directories" ItemName="InstallFolder" />
+    </InstalledProductsDiscoveryTask>
+    <Message Text="InstallFolder: @(InstallFolder)" Importance="High">
+    </Message>
+    <Copy SourceFiles="@(MainAssembly)" DestinationFolder="@(InstallFolder)" Condition="Exists('@(InstallFolder)')" />
+  </Target>
+</Project>

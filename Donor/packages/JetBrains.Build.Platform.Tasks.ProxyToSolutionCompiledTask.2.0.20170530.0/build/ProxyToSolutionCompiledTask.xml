@@ -1,0 +1,2019 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ProxyToSolutionCompiledTask</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ItemSpecModifiers">
+            <summary>
+            Encapsulates the definitions of the item-spec modifiers a.k.a. reserved item metadata.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ItemSpecModifiers.s_traceModifierCasing">
+            <summary>
+            Whether to dump when a modifier is in the "wrong" (slow) casing
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ItemSpecModifiers.GetItemSpecModifier(System.String,System.String,System.String,System.String)">
+            <summary>
+            Performs path manipulations on the given item-spec as directed.
+            Does not cache the result.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ItemSpecModifiers.GetItemSpecModifier(System.String,System.String,System.String,System.String,System.String@)">
+            <summary>
+            Performs path manipulations on the given item-spec as directed.
+            Supported modifiers:
+                %(FullPath)         = full path of item
+                %(RootDir)          = root directory of item
+                %(Filename)         = item filename without extension
+                %(Extension)        = item filename extension
+                %(RelativeDir)      = item directory as given in item-spec
+                %(Directory)        = full path of item directory relative to root
+                %(RecursiveDir)     = portion of item path that matched a recursive wildcard
+                %(Identity)         = item-spec as given
+                %(ModifiedTime)     = last write time of item
+                %(CreatedTime)      = creation time of item
+                %(AccessedTime)     = last access time of item
+            NOTES:
+            1) This method always returns an empty string for the %(RecursiveDir) modifier because it does not have enough
+               information to compute it -- only the BuildItem class can compute this modifier.
+            2) All but the file time modifiers could be cached, but it's not worth the space. Only full path is cached, as the others are just string manipulations.
+            </summary>
+            <remarks>
+            Methods of the Path class "normalize" slashes and periods. For example:
+            1) successive slashes are combined into 1 slash
+            2) trailing periods are discarded
+            3) forward slashes are changed to back-slashes
+            As a result, we cannot rely on any file-spec that has passed through a Path method to remain the same. We will
+            therefore not bother preserving slashes and periods when file-specs are transformed.
+            Never returns null.
+            </remarks>
+            <param name="currentDirectory">The root directory for relative item-specs. When called on the Engine thread, this is the project directory. When called as part of building a task, it is null, indicating that the current directory should be used.</param>
+            <param name="itemSpec">The item-spec to modify.</param>
+            <param name="definingProjectEscaped">The path to the project that defined this item (may be null).</param>
+            <param name="modifier">The modifier to apply to the item-spec.</param>
+            <param name="fullPath">Full path if any was previously computed, to cache.</param>
+            <returns>The modified item-spec (can be empty string, but will never be null).</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when the item-spec is not a path.</exception>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ItemSpecModifiers.IsDefiningProjectModifier(System.String)">
+            <summary>
+            Indicates if the given name is reserved for one of the specific subset of itemspec
+            modifiers to do with the defining project of the item.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ItemSpecModifiers.IsDerivableItemSpecModifier(System.String)">
+            <summary>
+            Indicates if the given name is reserved for a derivable item-spec modifier.
+            Derivable means it can be computed given a file name.
+            </summary>
+            <param name="name">Name to check.</param>
+            <returns>true, if name of a derivable modifier</returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ItemSpecModifiers.IsItemSpecModifier(System.String)">
+            <summary>
+            Indicates if the given name is reserved for an item-spec modifier.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ItemSpecModifiers.ThrowForUrl(System.String,System.String,System.String)">
+            <summary>
+            Temporary check for something like http://foo which will end up like c:\foo\bar\http://foo
+            We should either have no colon, or exactly one colon.
+            UNDONE: This is a minimal safe change for Dev10. The correct fix should be to make GetFullPath/NormalizePath throw for this.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem">
+            <summary>
+            This class represents a single item of the project, as it is passed into a task. TaskItems do not exactly correspond to
+            item elements in project files, because then tasks would have access to data that wasn't explicitly passed into the task
+            via the project file. It's not a security issue, but more just an issue with project file clarity and transparency.
+            Note: This class has to be sealed.  It has to be sealed because the engine instantiates it's own copy of this type and
+            thus if someone were to extend it, they would not get the desired behavior from the engine.
+            </summary>
+            <comment>
+            Surprisingly few of these Utilities TaskItems are created: typically several orders of magnitude fewer than the number of engine TaskItems.
+            </comment>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem._definingProject">
+            <summary>
+            May be defined if we're copying this item from a pre-existing one.  Otherwise,
+            we simply don't know enough to set it properly, so it will stay null.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.#ctor">
+            <summary>
+            Default constructor -- we need it so this type is COM-createable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.#ctor(System.String)">
+            <summary>
+            This constructor creates a new task item, given the item spec.
+            </summary>
+            <comments>Assumes the itemspec passed in is escaped.</comments>
+            <param name="itemSpec">The item-spec string.</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.#ctor(System.String,System.Collections.IDictionary)">
+            <summary>
+            This constructor creates a new TaskItem, using the given item spec and metadata.
+            </summary>
+            <comments>
+            Assumes the itemspec passed in is escaped, and also that any escapable metadata values
+            are passed in escaped form.
+            </comments>
+            <param name="itemSpec">The item-spec string.</param>
+            <param name="itemMetadata">Custom metadata on the item.</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.#ctor(Microsoft.Build.Framework.ITaskItem)">
+            <summary>
+            This constructor creates a new TaskItem, using the given ITaskItem.
+            </summary>
+            <param name="sourceItem">The item to copy.</param>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.ItemSpec">
+            <summary>
+            Gets or sets the item-spec.
+            </summary>
+            <comments>
+            This one is a bit tricky.  Orcas assumed that the value being set was escaped, but
+            that the value being returned was unescaped.  Maintain that behaviour here.  To get
+            the escaped value, use ITaskItem2.EvaluatedIncludeEscaped.
+            </comments>
+            <value>The item-spec string.</value>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.MetadataCount">
+            <summary>
+            Gets the number of metadata set on the item.
+            </summary>
+            <value>Count of metadata.</value>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.MetadataNames">
+            <summary>
+            Gets the names of all the item's metadata.
+            </summary>
+            <value>List of metadata names.</value>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.CloneCustomMetadata">
+            <summary>
+            Get the collection of custom metadata. This does not include built-in metadata.
+            </summary>
+            <remarks>
+            RECOMMENDED GUIDELINES FOR METHOD IMPLEMENTATIONS:
+            1) this method should return a clone of the metadata
+            2) writing to this dictionary should not be reflected in the underlying item.
+            </remarks>
+            <comments>
+            Returns an UNESCAPED version of the custom metadata. For the escaped version (which
+            is how it is stored internally), call ITaskItem2.CloneCustomMetadataEscaped.
+            </comments>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.CopyMetadataTo(Microsoft.Build.Framework.ITaskItem)">
+            <summary>
+            Copy the metadata (but not the ItemSpec) to destinationItem. If a particular metadata already exists on the
+            destination item, then it is not overwritten -- the original value wins.
+            </summary>
+            <param name="destinationItem">The item to copy metadata to.</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.GetMetadata(System.String)">
+            <summary>
+            Retrieves one of the arbitrary metadata on the item.
+            If not found, returns empty string.
+            </summary>
+            <comments>
+            Returns the unescaped value of the metadata requested.
+            </comments>
+            <param name="metadataName">The name of the metadata to retrieve.</param>
+            <returns>The metadata value.</returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.InitializeLifetimeService">
+            <summary>
+            Overridden to give this class infinite lease time. Otherwise we end up with a limited
+            lease (5 minutes I think) and instances can expire if they take long time processing.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.op_Explicit(JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem)~System.String">
+            <summary>
+            This allows an explicit typecast from a "TaskItem" to a "string", returning the escaped ItemSpec for this item.
+            </summary>
+            <param name="taskItemToCast">The item to operate on.</param>
+            <returns>The item-spec of the item.</returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.RemoveMetadata(System.String)">
+            <summary>
+            Removes one of the arbitrary metadata on the item.
+            </summary>
+            <param name="metadataName">Name of metadata to remove.</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.SetMetadata(System.String,System.String)">
+            <summary>
+            Sets one of the arbitrary metadata on the item.
+            </summary>
+            <comments>
+            Assumes that the value being passed in is in its escaped form.
+            </comments>
+            <param name="metadataName">Name of metadata to set or change.</param>
+            <param name="metadataValue">Value of metadata.</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.ToString">
+            <summary>
+            Gets the item-spec.
+            </summary>
+            <returns>The item-spec string.</returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.Microsoft#Build#Framework#ITaskItem2#CloneCustomMetadataEscaped">
+            <summary>
+            ITaskItem2 implementation which returns a clone of the metadata on this object.
+            Values returned are in their original escaped form.
+            </summary>
+            <returns>The cloned metadata.</returns>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.Microsoft#Build#Framework#ITaskItem2#EvaluatedIncludeEscaped">
+            <summary>
+            Gets or sets the escaped include, or "name", for the item.
+            </summary>
+            <remarks>
+            Taking the opportunity to fix the property name, although this doesn't
+            make it obvious it's an improvement on ItemSpec.
+            </remarks>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.Microsoft#Build#Framework#ITaskItem2#GetMetadataValueEscaped(System.String)">
+            <summary>
+            Returns the escaped value of the metadata with the specified key.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.Metadata">
+            <summary>
+            Gets the metadata dictionary
+            Property is required so that we can access the metadata dictionary in an item from
+            another appdomain, as the CLR has implemented remoting policies that disallow accessing
+            private fields in remoted items.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.TaskItem.Microsoft#Build#Framework#ITaskItem2#SetMetadataValueLiteral(System.String,System.String)">
+            <summary>
+            Sets the escaped value of the metadata with the specified name.
+            </summary>
+            <comments>
+            Assumes the value is passed in unescaped.
+            </comments>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities">
+            <summary>
+            This class implements static methods to assist with unescaping of %XX codes
+            in the MSBuild file format.
+            </summary>
+            <remarks>
+            PERF: since we escape and unescape relatively frequently, it may be worth caching
+            the last N strings that were (un)escaped
+            </remarks>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities.s_charsToEscape">
+            <summary>
+            Special characters that need escaping.
+            It's VERY important that the percent character is the FIRST on the list - since it's both a character
+            we escape and use in escape sequences, we can unintentionally escape other escape sequences if we
+            don't process it first. Of course we'll have a similar problem if we ever decide to escape hex digits
+            (that would require rewriting the algorithm) but since it seems unlikely that we ever do, this should
+            be good enough to avoid complicating the algorithm at this point.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities.s_unescapedToEscapedStrings">
+            <summary>
+            Optional cache of escaped strings for use when needing to escape in performance-critical scenarios with significant
+            expected string reuse.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities.AppendEscapedChar(System.Text.StringBuilder,System.Char)">
+            <summary>
+            Append the escaped version of the given character to a <see cref="T:System.Text.StringBuilder" />.
+            </summary>
+            <param name="sb">The <see cref="T:System.Text.StringBuilder" /> to which to append.</param>
+            <param name="ch">The character to escape.</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities.AppendEscapedString(System.Text.StringBuilder,System.String)">
+            <summary>
+            Append the escaped version of the given string to a <see cref="T:System.Text.StringBuilder" />.
+            </summary>
+            <param name="sb">The <see cref="T:System.Text.StringBuilder" /> to which to append.</param>
+            <param name="unescapedString">The unescaped string.</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities.ContainsEscapedWildcards(System.String)">
+            <summary>
+            Determines whether the string contains the escaped form of '*' or '?'.
+            </summary>
+            <param name="escapedString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities.ContainsReservedCharacters(System.String)">
+            <summary>
+            Before trying to actually escape the string, it can be useful to call this method to determine
+            if escaping is necessary at all.  This can save lots of calls to copy around item metadata
+            that is really the same whether escaped or not.
+            </summary>
+            <param name="unescapedString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities.Escape(System.String)">
+            <summary>
+            Adds instances of %XX in the input string where the char char to be escaped appears
+            XX is the hex value of the ASCII code for the char.
+            </summary>
+            <param name="unescapedString">The string to escape.</param>
+            <returns>escaped string</returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities.EscapeWithCaching(System.String)">
+            <summary>
+            Adds instances of %XX in the input string where the char char to be escaped appears
+            XX is the hex value of the ASCII code for the char.  Interns and caches the result.
+            </summary>
+            <comment>
+            NOTE:  Only recommended for use in scenarios where there's expected to be significant
+            repetition of the escaped string.  Cache currently grows unbounded.
+            </comment>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities.EscapeWithOptionalCaching(System.String,System.Boolean)">
+            <summary>
+            Adds instances of %XX in the input string where the char char to be escaped appears
+            XX is the hex value of the ASCII code for the char.  Caches if requested.
+            </summary>
+            <param name="unescapedString">The string to escape.</param>
+            <param name="cache">
+            True if the cache should be checked, and if the resultant string
+            should be cached.
+            </param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities.HexDigitChar(System.Int32)">
+            <summary>
+            Convert the given integer into its hexadecimal representation.
+            </summary>
+            <param name="x">The number to convert, which must be non-negative and less than 16</param>
+            <returns>The character which is the hexadecimal representation of <paramref name="x" />.</returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities.UnescapeAll(System.String)">
+            <summary>
+            Replaces all instances of %XX in the input string with the character represented
+            by the hexadecimal number XX.
+            </summary>
+            <param name="escapedString">The string to unescape.</param>
+            <returns>unescaped string</returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.EscapingUtilities.UnescapeAll(System.String,System.Boolean@)">
+            <summary>
+            Replaces all instances of %XX in the input string with the character represented
+            by the hexadecimal number XX.
+            </summary>
+            <param name="escapedString">The string to unescape.</param>
+            <param name="escapingWasNecessary">Whether any replacements were made.</param>
+            <returns>unescaped string</returns>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1">
+            <summary>
+            A special singleton read-only empty list
+            </summary>
+            <typeparam name="T">Type of item</typeparam>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.s_instance">
+            <summary>
+            The single instance
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.#ctor">
+            <summary>
+            Private default constructor as this is a singleton
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.Count">
+            <summary>
+            There are no items in this list
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.Instance">
+            <summary>
+            Get the instance
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.IsReadOnly">
+            <summary>
+            Read-only list
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.Item(System.Int32)">
+            <summary>
+            Items cannot be retrieved or added to a read-only list
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.Add(`0)">
+            <summary>
+            Items cannot be added to a read-only list
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.Clear">
+            <summary>
+            Read-only list cannot be cleared
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.Contains(`0)">
+            <summary>
+            An empty list contains nothing
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            An empty list copies nothing
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.GetEnumerator">
+            <summary>
+            Get an enumerator over an empty collection
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.IndexOf(`0)">
+            <summary>
+            Index of specified item
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.Insert(System.Int32,`0)">
+            <summary>
+            Items cannot be inserted into a read-only list
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.Remove(`0)">
+            <summary>
+            Cannot remove items from a read-only list
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.RemoveAt(System.Int32)">
+            <summary>
+            Items cannot be removed from a read-only list
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
+            <summary>
+            ICollection implementation
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.System#Collections#ICollection#Count">
+            <summary>
+            ICollection implementation
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Get an enumerator over an empty collection
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.System#Collections#ICollection#IsSynchronized">
+            <summary>
+            ICollection implementation
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyList`1.System#Collections#ICollection#SyncRoot">
+            <summary>
+            ICollection implementation
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.FileUtilitiesRegex">
+            <summary>
+            This class contains utility methods for file IO.
+            Separate from FileUtilities because some assemblies may only need the patterns.
+            PERF\COVERAGE NOTE: Try to keep classes in 'shared' as granular as possible. All the methods in
+            each class get pulled into the resulting assembly.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ExceptionHandling">
+            <summary>
+            Utility methods for classifying and handling exceptions.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ExceptionHandling.IsIoRelatedException(System.Exception)">
+            <summary>
+            Determine whether the exception is file-IO related.
+            </summary>
+            <param name="e">The exception to check.</param>
+            <returns>True if exception is IO related.</returns>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2">
+            <summary>
+             A dictionary that has copy-on-write semantics.
+             KEYS AND VALUES MUST BE IMMUTABLE OR COPY-ON-WRITE FOR THIS TO WORK.
+            </summary>
+            <typeparam name="K">The key type.</typeparam>
+            <typeparam name="V">The value type.</typeparam>
+            <remarks>
+             This dictionary works by having a backing dictionary which is ref-counted for each
+             COWDictionary which references it.  When a write operation is performed on any
+             COWDictionary, we check the reference count on the backing dictionary.  If it is
+             greater than 1, it means any changes we make to it would be visible to other readers.
+             Therefore, we clone the backing dictionary and decrement the reference count on the
+             original.  From there on we use the cloned dictionary, which now has a reference count
+             of 1.
+             Thread safety: for all users, this class is as thread safe as the underlying Dictionary implementation, that is,
+             safe for concurrent readers or one writer from EACH user. It achieves this by locking itself and cloning before
+             any write, if it is being shared - i.e., stopping sharing before any writes occur.
+            </remarks>
+            <comment>
+             This class must be serializable as it is used for metadata passed to tasks, which may
+             be run in a separate appdomain.
+            </comment>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.backing">
+            <summary>
+            The backing dictionary.
+            Lazily created.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.capacity">
+            <summary>
+            The default capacity.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.keyComparer">
+            <summary>
+            The equality comparer to use when the dictionary is created.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.s_dummy">
+            <summary>
+            A special single dummy instance that always appears empty.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.#ctor">
+            <summary>
+            Constructor. Consider supplying a comparer instead.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.#ctor(System.Int32)">
+            <summary>
+            Constructor taking an initial capacity
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.#ctor(System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>
+            Constructor taking a specified comparer for the keys
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.#ctor(System.Int32,System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>
+            Constructor taking a specified comparer for the keys and an initial capacity
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Serialization constructor, for crossing appdomain boundaries
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.#ctor(JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary{`0,`1})">
+            <summary>
+            Cloning constructor. Defers the actual clone.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Count">
+            <summary>
+            Returns the number of items in the collection.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.IsReadOnly">
+            <summary>
+            Returns true if the collection is read-only.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Item(`0)">
+            <summary>
+            Accesses the value for the specified key.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Keys">
+            <summary>
+            Returns the collection of keys in the dictionary.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Values">
+            <summary>
+            Returns the collection of values in the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Add(`0,`1)">
+            <summary>
+            Adds a value to the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Add(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Adds an item to the collection.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Clear">
+            <summary>
+            Clears the collection.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Contains(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Returns true ff the collection contains the specified item.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.ContainsKey(`0)">
+            <summary>
+            Returns true if the dictionary contains the specified key.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyTo(System.Collections.Generic.KeyValuePair{`0,`1}[],System.Int32)">
+            <summary>
+            Copies all of the elements of the collection to the specified array.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.GetEnumerator">
+            <summary>
+            Implementation of generic IEnumerable.GetEnumerator()
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Remove(`0)">
+            <summary>
+            Removes the entry for the specified key from the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Remove(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Remove an item from the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.TryGetValue(`0,`1@)">
+            <summary>
+            Attempts to find the value for the specified key in the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#IDictionary#Add(System.Object,System.Object)">
+            <summary>
+            IDictionary implementation.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#IDictionary#Clear">
+            <summary>
+            IDictionary implementation.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Clone">
+            <summary>
+            Clone, with the actual clone deferred
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Comparer">
+            <summary>
+            Comparer used for keys
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#IDictionary#Contains(System.Object)">
+            <summary>
+            IDictionary implementation.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
+            <summary>
+            IDictionary implementation.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#ICollection#Count">
+            <summary>
+            IDictionary implementation
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.Dummy">
+            <summary>
+            A special single dummy instance that always appears empty.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Implementation of IEnumerable.GetEnumerator()
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#IDictionary#GetEnumerator">
+            <summary>
+            IDictionary implementation.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.HasSameBacking(JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary{`0,`1})">
+            <summary>
+            Returns true if these dictionaries have the same backing.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.IsDummy">
+            <summary>
+            Whether this is a dummy instance that always appears empty.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#IDictionary#IsFixedSize">
+            <summary>
+            IDictionary implementation
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#IDictionary#IsReadOnly">
+            <summary>
+            IDictionary implementation
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#ICollection#IsSynchronized">
+            <summary>
+            IDictionary implementation
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#IDictionary#Item(System.Object)">
+            <summary>
+            IDictionary implementation
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#IDictionary#Keys">
+            <summary>
+            IDictionary implementation
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.ReadOperation">
+            <summary>
+            Gets the backing dictionary for reading.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#IDictionary#Remove(System.Object)">
+            <summary>
+            IDictionary implementation.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#ICollection#SyncRoot">
+            <summary>
+            IDictionary implementation
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.System#Collections#IDictionary#Values">
+            <summary>
+            IDictionary implementation
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.WriteOperation">
+            <summary>
+            Gets the backing dictionary for writing.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyOnWriteBackingDictionary`2">
+            <summary>
+            A dictionary which is reference counted to allow several references for read operations, but knows when to clone for
+            write operations.
+            </summary>
+            <typeparam name="K1">The key type.</typeparam>
+            <typeparam name="V1">The value type.</typeparam>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyOnWriteBackingDictionary`2.s_readOnlyEmptyDictionary">
+            <summary>
+            An empty dictionary
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyOnWriteBackingDictionary`2._refCount">
+            <summary>
+            The reference count.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyOnWriteBackingDictionary`2.#ctor(System.Int32,System.Collections.Generic.IEqualityComparer{`2})">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyOnWriteBackingDictionary`2.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Serialization constructor, for crossing appdomain boundaries
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyOnWriteBackingDictionary`2.#ctor">
+            <summary>
+            Empty constructor.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyOnWriteBackingDictionary`2.#ctor(JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary{`0,`1}.CopyOnWriteBackingDictionary{`2,`3})">
+            <summary>
+            Cloning constructor.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyOnWriteBackingDictionary`2.HasNoClones">
+            <summary>
+            Returns true if this collection has no clones.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyOnWriteBackingDictionary`2.ReadOnlyEmptyInstance">
+            <summary>
+            Returns a read-only empty instance.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyOnWriteBackingDictionary`2.AddRef">
+            <summary>
+            Adds a reader-reference to this backing dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyOnWriteBackingDictionary`2.CloneForWriteIfNecessary">
+            <summary>
+            Clones backing dictionary if necessary for a write operation.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.CopyOnWriteDictionary`2.CopyOnWriteBackingDictionary`2.OnDeserialized(System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Deserialization does not call any constructors, not even
+            the parameterless constructor. Therefore since we do not serialize
+            this field, we must populate it here.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2">
+            <summary>
+            HybridDictionary is a dictionary which is implemented to efficiently store both small and large numbers of items.  When only a single item is stored, we use no
+            collections at all.  When 1 &lt; n &lt;= MaxListSize is stored, we use a list.  For any larger number of elements, we use a dictionary.
+            </summary>
+            <typeparam name="TKey">The key type</typeparam>
+            <typeparam name="TValue">The value type</typeparam>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.MaxListSize">
+            <summary>
+            The maximum number of entries we will store in a list before converting it to a dictionary.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.comparer">
+            <summary>
+            The comparer used to look up an item.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.store">
+            <summary>
+            The dictionary, list, or pair used for a store
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.#cctor">
+            <summary>
+            Static constructor
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.#ctor(System.Int32)">
+            <summary>
+            Capacity constructor.
+            </summary>
+            <param name="capacity">The initial capacity of the collection.</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.#ctor(System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="comparer">The comparer to use.</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.#ctor(System.Int32,System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="capacity">The initial capacity.</param>
+            <param name="comparer">The comparer to use.</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Serialization constructor.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.#ctor(JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary{`0,`1},System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>
+            Cloning constructor.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Comparer">
+            <summary>
+            Gets the comparer used to compare keys.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Count">
+            <summary>
+            Gets the number of items in the dictionary.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.IsFixedSize">
+            <summary>
+            Returns true if the dictionary is a fixed size.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.IsReadOnly">
+            <summary>
+            Returns true if this is a read-only collection.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.IsSynchronized">
+            <summary>
+            Returns true if this collection is synchronized.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Item(`0)">
+            <summary>
+            Item accessor.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Item(System.Object)">
+            <summary>
+            Item accessor.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Keys">
+            <summary>
+            Returns the collection of keys in the dictionary.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SyncRoot">
+            <summary>
+            Gets the sync root for this collection.
+            </summary>
+            <remarks>
+            NOTE: Returns "this", which is not normally recommended as a caller
+            could implement its own locking scheme on "this" and deadlock. However, a
+            sync object would be significant wasted space as there are a lot of these,
+            and the caller is not foolish.
+            </remarks>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Values">
+            <summary>
+            Returns the collection of values in the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Add(`0,`1)">
+            <summary>
+            Adds an item to the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Add(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Adds a key/value pair to the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Add(System.Object,System.Object)">
+            <summary>
+            Adds the specified key/value pair to the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Clear">
+            <summary>
+            Clears the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Contains(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Returns true of the dictionary contains the key/value pair.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Contains(System.Object)">
+            <summary>
+            Returns true if the dictionary contains the specified key.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.ContainsKey(`0)">
+            <summary>
+            Returns true if the specified key is contained within the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.CopyTo(System.Collections.Generic.KeyValuePair{`0,`1}[],System.Int32)">
+            <summary>
+            Copies the contents of the dictionary to the specified array.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.CopyTo(System.Array,System.Int32)">
+            <summary>
+            Copies the contents of the dictionary to the specified Array.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.GetEnumerator">
+            <summary>
+            Gets an enumerator over the key/value pairs in the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Remove(`0)">
+            <summary>
+            Removes a key from the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Remove(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Removed the specified key/value pair from the dictionary.
+            NOT IMPLEMENTED.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.Remove(System.Object)">
+            <summary>
+            Removes the specified key from the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.TryGetValue(`0,`1@)">
+            <summary>
+            Returns true and the value for the specified key if it is present in the dictionary, false otherwise.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.AddToOrUpdateList(System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{`0,`1}},`0,`1,System.Boolean)">
+            <summary>
+            Adds a value to the list, growing it to a dictionary if necessary
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Gets an enumerator over the key/value pairs in the dictionary.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.System#Collections#IDictionary#GetEnumerator">
+            <summary>
+            Returns an enumerator over the key/value pairs in the dictionary.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.System#Collections#IDictionary#Keys">
+            <summary>
+            Returns a collection of the keys in the dictionary.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.System#Collections#IDictionary#Values">
+            <summary>
+            Returns a collection of the values in the dictionary.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.ListDictionaryEntryEnumerator`2">
+            <summary>
+            An enumerator for a list of KVP that implements IDictionaryEnumerator
+            </summary>
+            <typeparam name="KK">Key type</typeparam>
+            <typeparam name="VV">Value type</typeparam>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.ListDictionaryEntryEnumerator`2.enumerator">
+            <summary>
+            The value.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.ListDictionaryEntryEnumerator`2.#ctor(System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{`2,`3}})">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.ListDictionaryEntryEnumerator`2.Current">
+            <summary>
+            Current
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.ListDictionaryEntryEnumerator`2.Entry">
+            <summary>
+            Gets the current value.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.ListDictionaryEntryEnumerator`2.Key">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.ListDictionaryEntryEnumerator`2.Value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.ListDictionaryEntryEnumerator`2.Dispose">
+            <summary>
+            Disposer.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.ListDictionaryEntryEnumerator`2.MoveNext">
+            <summary>
+            Moves to the next item.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.ListDictionaryEntryEnumerator`2.Reset">
+            <summary>
+            Resets the enumerator.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleDictionaryEntryEnumerator">
+            <summary>
+            An enumerator for when the dictionary has only a single entry in it.
+            Cannot find a way to make the SingleEntryEnumerator serve both purposes, as foreach preferentially
+            casts to IEnumerable that returns the generic enumerator instead of an IDictionaryEnumerator.
+            Don't want to use the List enumerator below as a throwaway one-entry list would need to be allocated.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleDictionaryEntryEnumerator.enumerationComplete">
+            <summary>
+            Flag indicating when we are at the end of the enumeration.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleDictionaryEntryEnumerator.value">
+            <summary>
+            The single value.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleDictionaryEntryEnumerator.#ctor(System.Collections.DictionaryEntry)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleDictionaryEntryEnumerator.Current">
+            <summary>
+            Current
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleDictionaryEntryEnumerator.Entry">
+            <summary>
+            Gets the current value.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleDictionaryEntryEnumerator.Key">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleDictionaryEntryEnumerator.Value">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleDictionaryEntryEnumerator.Dispose">
+            <summary>
+            Disposer.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleDictionaryEntryEnumerator.MoveNext">
+            <summary>
+            Moves to the next item.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleDictionaryEntryEnumerator.Reset">
+            <summary>
+            Resets the enumerator.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleEnumerator">
+            <summary>
+            An enumerator for when the dictionary has only a single entry in it.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleEnumerator.enumerationComplete">
+            <summary>
+            Flag indicating when we are at the end of the enumeration.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleEnumerator.value">
+            <summary>
+            The single value.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleEnumerator.#ctor(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleEnumerator.Current">
+            <summary>
+            Gets the current value.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleEnumerator.Dispose">
+            <summary>
+            Disposer.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleEnumerator.MoveNext">
+            <summary>
+            Moves to the next item.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleEnumerator.Reset">
+            <summary>
+            Resets the enumerator.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.HybridDictionary`2.SingleEnumerator.System#Collections#IEnumerator#Current">
+            <summary>
+            Gets the current value.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities">
+            <summary>
+            This class contains methods that are useful for error checking and validation.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.s_throwExceptions">
+            <summary>
+            Emergency escape hatch. If a customer hits a bug in the shipped product causing an internal exception,
+            and fortuitously it happens that ignoring the VerifyThrow allows execution to continue in a reasonable way,
+            then we can give them this undocumented environment variable as an immediate workaround.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.ThrowArgument(System.String,System.Object[])">
+            <summary>
+            Throws an ArgumentException that can include an inner exception.
+            PERF WARNING: calling a method that takes a variable number of arguments
+            is expensive, because memory is allocated for the array of arguments -- do
+            not call this method repeatedly in performance-critical scenarios
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.ThrowArgument(System.Exception,System.String,System.Object[])">
+            <summary>
+            Throws an ArgumentException that can include an inner exception.
+            PERF WARNING: calling a method that takes a variable number of arguments
+            is expensive, because memory is allocated for the array of arguments -- do
+            not call this method repeatedly in performance-critical scenarios
+            </summary>
+            <remarks>
+            This method is thread-safe.
+            </remarks>
+            <param name="innerException">Can be null.</param>
+            <param name="resourceName"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.ThrowArgumentOutOfRange(System.String)">
+            <summary>
+            Throws an argument out of range exception.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.ThrowInternalError(System.String,System.Object[])">
+            <summary>
+            Throws InvalidOperationException.
+            This is only for situations that would mean that there is a bug in MSBuild itself.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.ThrowInternalError(System.String,System.Exception,System.Object[])">
+            <summary>
+            Throws InvalidOperationException.
+            This is only for situations that would mean that there is a bug in MSBuild itself.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.ThrowInternalErrorUnreachable">
+            <summary>
+            Throws InvalidOperationException.
+            Indicates the code path followed should not have been possible.
+            This is only for situations that would mean that there is a bug in MSBuild itself.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.ThrowInvalidOperation(System.String,System.Object[])">
+            <summary>
+            Throws an InvalidOperationException with the specified resource string
+            </summary>
+            <param name="resourceName">Resource to use in the exception</param>
+            <param name="args">Formatting args.</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrow(System.Boolean,System.String)">
+            <summary>
+            This method should be used in places where one would normally put
+            an "assert". It should be used to validate that our assumptions are
+            true, where false would indicate that there must be a bug in our
+            code somewhere. This should not be used to throw errors based on bad
+            user input or anything that the user did wrong.
+            </summary>
+            <param name="condition"></param>
+            <param name="unformattedMessage"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrow(System.Boolean,System.String,System.Object)">
+            <summary>
+            Overload for one string format argument.
+            </summary>
+            <param name="condition"></param>
+            <param name="unformattedMessage"></param>
+            <param name="arg0"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrow(System.Boolean,System.String,System.Object,System.Object)">
+            <summary>
+            Overload for two string format arguments.
+            </summary>
+            <param name="condition"></param>
+            <param name="unformattedMessage"></param>
+            <param name="arg0"></param>
+            <param name="arg1"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrow(System.Boolean,System.String,System.Object,System.Object,System.Object)">
+            <summary>
+            Overload for three string format arguments.
+            </summary>
+            <param name="condition"></param>
+            <param name="unformattedMessage"></param>
+            <param name="arg0"></param>
+            <param name="arg1"></param>
+            <param name="arg2"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrow(System.Boolean,System.String,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Overload for four string format arguments.
+            </summary>
+            <param name="condition"></param>
+            <param name="unformattedMessage"></param>
+            <param name="arg0"></param>
+            <param name="arg1"></param>
+            <param name="arg2"></param>
+            <param name="arg3"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgument(System.Boolean,System.String)">
+            <summary>
+            Throws an ArgumentException if the given condition is false.
+            </summary>
+            <remarks>This method is thread-safe.</remarks>
+            <param name="condition"></param>
+            <param name="resourceName"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgument(System.Boolean,System.String,System.Object)">
+            <summary>
+            Overload for one string format argument.
+            </summary>
+            <remarks>This method is thread-safe.</remarks>
+            <param name="condition"></param>
+            <param name="resourceName"></param>
+            <param name="arg0"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgument(System.Boolean,System.String,System.Object,System.Object)">
+            <summary>
+            Overload for two string format arguments.
+            </summary>
+            <remarks>This method is thread-safe.</remarks>
+            <param name="condition"></param>
+            <param name="resourceName"></param>
+            <param name="arg0"></param>
+            <param name="arg1"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgument(System.Boolean,System.String,System.Object,System.Object,System.Object)">
+            <summary>
+            Overload for three string format arguments.
+            </summary>
+            <remarks>This method is thread-safe.</remarks>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgument(System.Boolean,System.String,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Overload for four string format arguments.
+            </summary>
+            <remarks>This method is thread-safe.</remarks>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgument(System.Boolean,System.Exception,System.String)">
+            <summary>
+            Throws an ArgumentException that includes an inner exception, if
+            the given condition is false.
+            </summary>
+            <remarks>This method is thread-safe.</remarks>
+            <param name="condition"></param>
+            <param name="innerException">Can be null.</param>
+            <param name="resourceName"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgument(System.Boolean,System.Exception,System.String,System.Object)">
+            <summary>
+            Overload for one string format argument.
+            </summary>
+            <remarks>This method is thread-safe.</remarks>
+            <param name="condition"></param>
+            <param name="innerException"></param>
+            <param name="resourceName"></param>
+            <param name="arg0"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgument(System.Boolean,System.Exception,System.String,System.Object,System.Object)">
+            <summary>
+            Overload for two string format arguments.
+            </summary>
+            <remarks>This method is thread-safe.</remarks>
+            <param name="condition"></param>
+            <param name="innerException"></param>
+            <param name="resourceName"></param>
+            <param name="arg0"></param>
+            <param name="arg1"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgument(System.Boolean,System.Exception,System.String,System.Object,System.Object,System.Object)">
+            <summary>
+            Overload for three string format arguments.
+            </summary>
+            <remarks>This method is thread-safe.</remarks>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgument(System.Boolean,System.Exception,System.String,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Overload for four string format arguments.
+            </summary>
+            <remarks>This method is thread-safe.</remarks>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgumentArraysSameLength(System.Array,System.Array,System.String,System.String)">
+            <summary>
+            Verifies the given arrays are not null and have the same length
+            </summary>
+            <param name="parameter1"></param>
+            <param name="parameter2"></param>
+            <param name="parameter1Name"></param>
+            <param name="parameter2Name"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgumentLength(System.String,System.String)">
+            <summary>
+            Throws an ArgumentNullException if the given string parameter is null
+            and ArgumentException if it has zero length.
+            </summary>
+            <param name="parameter"></param>
+            <param name="parameterName"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgumentLengthIfNotNull(System.String,System.String)">
+            <summary>
+            Throws an ArgumentException if the string has zero length, unless it is
+            null, in which case no exception is thrown.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgumentNull(System.Object,System.String)">
+            <summary>
+            Throws an ArgumentNullException if the given parameter is null.
+            </summary>
+            <remarks>This method is thread-safe.</remarks>
+            <param name="parameter"></param>
+            <param name="parameterName"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgumentNull(System.Object,System.String,System.String)">
+            <summary>
+            Throws an ArgumentNullException if the given parameter is null.
+            </summary>
+            <remarks>This method is thread-safe.</remarks>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowArgumentOutOfRange(System.Boolean,System.String)">
+            <summary>
+            Throws an ArgumentOutOfRangeException using the given parameter name
+            if the condition is false.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowInternalLength(System.String,System.String)">
+            <summary>
+            Helper to throw an InvalidOperationException when the specified parameter is null or zero length.
+            This should be used ONLY if this would indicate a bug in MSBuild rather than
+            anything caused by user action.
+            </summary>
+            <param name="parameterValue">The value of the argument.</param>
+            <param name="parameterName">Parameter that should not be null or zero length</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowInternalLockHeld(System.Object)">
+            <summary>
+            Helper to throw an InvalidOperationException when a lock on the specified object is not already held.
+            This should be used ONLY if this would indicate a bug in MSBuild rather than
+            anything caused by user action.
+            </summary>
+            <param name="locker">The object that should already have been used as a lock.</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowInternalNull(System.Object,System.String)">
+            <summary>
+            Helper to throw an InvalidOperationException when the specified parameter is null.
+            This should be used ONLY if this would indicate a bug in MSBuild rather than
+            anything caused by user action.
+            </summary>
+            <param name="parameter">The value of the argument.</param>
+            <param name="parameterName">Parameter that should not be null</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowInternalRooted(System.String)">
+            <summary>
+            Helper to throw an InvalidOperationException when the specified parameter is not a rooted path.
+            This should be used ONLY if this would indicate a bug in MSBuild rather than
+            anything caused by user action.
+            </summary>
+            <param name="value">Parameter that should be a rooted path</param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowInvalidOperation(System.Boolean,System.String)">
+            <summary>
+            Throws an InvalidOperationException if the given condition is false.
+            </summary>
+            <param name="condition"></param>
+            <param name="resourceName"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowInvalidOperation(System.Boolean,System.String,System.Object)">
+            <summary>
+            Overload for one string format argument.
+            </summary>
+            <param name="condition"></param>
+            <param name="resourceName"></param>
+            <param name="arg0"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowInvalidOperation(System.Boolean,System.String,System.Object,System.Object)">
+            <summary>
+            Overload for two string format arguments.
+            </summary>
+            <param name="condition"></param>
+            <param name="resourceName"></param>
+            <param name="arg0"></param>
+            <param name="arg1"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowInvalidOperation(System.Boolean,System.String,System.Object,System.Object,System.Object)">
+            <summary>
+            Overload for three string format arguments.
+            </summary>
+            <param name="condition"></param>
+            <param name="resourceName"></param>
+            <param name="arg0"></param>
+            <param name="arg1"></param>
+            <param name="arg2"></param>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ErrorUtilities.VerifyThrowInvalidOperation(System.Boolean,System.String,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Overload for four string format arguments.
+            </summary>
+            <param name="condition"></param>
+            <param name="resourceName"></param>
+            <param name="arg0"></param>
+            <param name="arg1"></param>
+            <param name="arg2"></param>
+            <param name="arg3"></param>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1">
+            <summary>
+            A read-only wrapper over an empty collection.
+            </summary>
+            <remarks>
+            Thus this is an omission from the BCL.
+            </remarks>
+            <typeparam name="T">Type of element in the collection</typeparam>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.s_instance">
+            <summary>
+            Backing live collection
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.#ctor">
+            <summary>
+            Private default constructor as this is a singleton
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.Count">
+            <summary>
+            Pass through for underlying collection
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.Instance">
+            <summary>
+            Get the instance
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.IsReadOnly">
+            <summary>
+            Returns true.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.Add(`0)">
+            <summary>
+            Prohibited on read only collection: throws
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.Clear">
+            <summary>
+            Prohibited on read only collection: throws
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.Contains(`0)">
+            <summary>
+            Pass through for underlying collection
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            Pass through for underlying collection
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.GetEnumerator">
+            <summary>
+            Get an enumerator over an empty collection
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.Remove(`0)">
+            <summary>
+            Prohibited on read only collection: throws
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
+            <summary>
+            ICollection version of CopyTo
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Get an enumerator over an empty collection
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.System#Collections#ICollection#IsSynchronized">
+            <summary>
+            Whether collection is synchronized
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyCollection`1.System#Collections#ICollection#SyncRoot">
+            <summary>
+            Sync root
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2">
+            <summary>
+            A special singleton enumerable that enumerates a read-only empty dictionary
+            </summary>
+            <typeparam name="K">Key</typeparam>
+            <typeparam name="V">Value</typeparam>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.s_backing">
+            <summary>
+            The single instance
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.s_instance">
+            <summary>
+            The single instance
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.#ctor">
+            <summary>
+            Private default constructor as this is a singleton
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Count">
+            <summary>
+            Empty returns zero
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Instance">
+            <summary>
+            Get the instance
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.IsFixedSize">
+            <summary>
+            Is it fixed size
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.IsReadOnly">
+            <summary>
+            Returns true
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.IsSynchronized">
+            <summary>
+            Not synchronized
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Item(System.Object)">
+            <summary>
+            Indexer
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Item(`0)">
+            <summary>
+            Get returns null as read-only
+            Set is prohibited and throws.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Keys">
+            <summary>
+            Gets empty collection
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.SyncRoot">
+            <summary>
+            No sync root
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Values">
+            <summary>
+            Gets empty collection
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Add(`0,`1)">
+            <summary>
+            Pass through for underlying collection
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Add(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Prohibited on read only collection: throws
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Add(System.Object,System.Object)">
+            <summary>
+            Add
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Clear">
+            <summary>
+            Prohibited on read only collection: throws
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Contains(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Empty returns false
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Contains(System.Object)">
+            <summary>
+            Contains
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.ContainsKey(`0)">
+            <summary>
+            Empty returns false
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.CopyTo(System.Collections.Generic.KeyValuePair{`0,`1}[],System.Int32)">
+            <summary>
+            Empty does nothing
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.CopyTo(System.Array,System.Int32)">
+            <summary>
+            CopyTo
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.GetEnumerator">
+            <summary>
+            Get empty enumerator
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Remove(`0)">
+            <summary>
+            Prohibited on read only collection: throws
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Remove(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Prohibited on read only collection: throws
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.Remove(System.Object)">
+            <summary>
+            Remove
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.TryGetValue(`0,`1@)">
+            <summary>
+            Empty returns false
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Get empty enumerator
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.System#Collections#IDictionary#GetEnumerator">
+            <summary>
+            Enumerator
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.System#Collections#IDictionary#Keys">
+            <summary>
+            Keys
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.ReadOnlyEmptyDictionary`2.System#Collections#IDictionary#Values">
+            <summary>
+            Values
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer">
+            <summary>
+            This is a custom string comparer that has three advantages over the regular
+            string comparer:
+            1) It can generate hash codes and perform equivalence operations on parts of a string rather than a whole
+            2) It uses "unsafe" pointers to maximize performance of those operations
+            3) It takes advantage of limitations on MSBuild Property/Item names to cheaply do case insensitive comparison.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.constraintString">
+            <summary>
+            String to be constrained.
+            If null, comparer is unconstrained.
+            If empty string, comparer is unconstrained and immutable.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.endIndex">
+            <summary>
+            End of constraint
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.immutable">
+            <summary>
+            True if the comparer is immutable; false otherwise.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.lockObject">
+            <summary>
+            Object used to lock the internal state s.t. we know that only one person is modifying
+            it at any one time.
+            This is necessary to prevent, e.g., someone from reading the comparer (through GetHashCode when setting
+            a property, for example) at the same time that someone else is writing to it.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.s_immutableComparer">
+            <summary>
+            The default immutable comparer instance operating on the whole string that can be used instead of creating once each time
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.s_mutableComparer">
+            <summary>
+            The default mutable comparer instance that will ideally be shared by all users who need a mutable comparer.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.startIndex">
+            <summary>
+            Start of constraint
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.#ctor(System.Boolean)">
+            <summary>
+            Constructor. If specified, comparer is immutable and operates on the whole string.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.Equals(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Performs the "Equals" operation on two MSBuild property, item or metadata names
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.Equals(JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.IKeyed,JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.IKeyed)">
+            <summary>
+            Compare keyed operands
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.Equals(System.String,System.String)">
+            <summary>
+            Performs the "Equals" operation on two MSBuild property, item or metadata names
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.GetHashCode(JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.IKeyed)">
+            <summary>
+            Get case insensitive hashcode for key
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.GetHashCode(System.String)">
+            <summary>
+            Getting a case insensitive hash code for the msbuild property, item or metadata name
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.GetValueWithConstraints``1(System.Collections.Generic.IDictionary{System.String,``0},System.String,System.Int32,System.Int32)">
+            <summary>
+            Given a set of constraints and a dictionary for which we are the comparer, return the value for the given key.
+            The key is also used as the string for the constraint.
+            </summary>
+            <typeparam name="T">The value type of the dictionary being looked up</typeparam>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.Default">
+            <summary>
+            The default immutable comparer instance.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.Mutable">
+            <summary>
+            The default mutable comparer instance.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.RemoveConstraintsForUnitTestingOnly">
+            <summary>
+            Companion to SetConstraintsForUnitTestingOnly -- makes the comparer unconstrained again.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.MSBuildNameIgnoreCaseComparer.SetConstraintsForUnitTestingOnly(System.String,System.Int32,System.Int32)">
+            <summary>
+            Set the constraints in the comparer explicitly -- should ONLY be used for unit tests
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.IKeyed">
+            <summary>
+            Interface allowing items and metadata and properties to go into keyed collections
+            </summary>
+            <remarks>
+            This can be internal as it is a constraint only on internal collections.
+            </remarks>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.IKeyed.Key">
+            <summary>
+            Returns some value useful for a key in a dictionary
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.FileUtilities">
+            <summary>
+            This class contains utility methods for file IO.
+            PERF\COVERAGE NOTE: Try to keep classes in 'shared' as granular as possible. All the methods in
+            each class get pulled into the resulting assembly.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.FileUtilities.MAX_PATH">
+            <summary>
+            Default buffer size to use when dealing with the Windows API.
+            </summary>
+            <remarks>
+            This member is intentionally not a constant because we want to allow
+            unit tests to change it.
+            </remarks>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.FileUtilities.AttemptToShortenPath(System.String)">
+            <summary>
+            Normalizes the path if and only if it is longer than max path,
+            or would be if rooted by the current directory.
+            This may make it shorter by removing ".."'s.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.FileUtilities.EndsWithSlash(System.String)">
+            <summary>
+            Indicates if the given file-spec ends with a slash.
+            </summary>
+            <param name="fileSpec">The file spec.</param>
+            <returns>true, if file-spec has trailing slash</returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.FileUtilities.GetDirectory(System.String)">
+            <summary>
+            Extracts the directory from the given file-spec.
+            </summary>
+            <param name="fileSpec">The filespec.</param>
+            <returns>directory path</returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.FileUtilities.GetFileInfoNoThrow(System.String)">
+            <summary>
+            Gets a file info object for the specified file path. If the file path
+            is invalid, or is a directory, or cannot be accessed, or does not exist,
+            it returns null rather than throwing or returning a FileInfo around a non-existent file.
+            This allows it to be called where File.Exists() (which never throws, and returns false
+            for directories) was called - but with the advantage that a FileInfo object is returned
+            that can be queried (e.g., for LastWriteTime) without hitting the disk again.
+            </summary>
+            <param name="filePath"></param>
+            <returns>FileInfo around path if it is an existing /file/, else null</returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.FileUtilities.GetFullPath(System.String,System.String)">
+            <summary>
+            Determines the full path for the given file-spec.
+            ASSUMES INPUT IS STILL ESCAPED
+            </summary>
+            <param name="fileSpec">The file spec to get the full path of.</param>
+            <param name="currentDirectory"></param>
+            <returns>full path</returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.FileUtilities.GetFullPathNoThrow(System.String)">
+            <summary>
+            A variation of Path.GetFullPath that will return the input value
+            instead of throwing any IO exception.
+            Useful to get a better path for an error message, without the risk of throwing
+            if the error message was itself caused by the path being invalid!
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.FileUtilities.IsRootedNoThrow(System.String)">
+            <summary>
+            A variation of Path.IsRooted that not throw any IO exception.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.FileUtilities.IsSlash(System.Char)">
+            <summary>
+            Indicates if the given character is a slash.
+            </summary>
+            <param name="c"></param>
+            <returns>true, if slash</returns>
+        </member>
+        <member name="M:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.Infra.FileUtilities.NormalizePath(System.String)">
+            <summary>
+            Gets the canonicalized full path of the provided path.
+            Path.GetFullPath The pre .Net 4.6.2 implementation of Path.GetFullPath is slow and creates strings in its work.
+            Therefore MSBuild has its own implementation on full framework.
+            Guidance for use: call this on all paths accepted through public entry
+            points that need normalization. After that point, only verify the path
+            is rooted, using ErrorUtilities.VerifyThrowPathRooted.
+            ASSUMES INPUT IS ALREADY UNESCAPED.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.ProxyToSolutionCompiledTask">
+            <summary>
+              <para>Allows to use MSBuild tasks whose code sits in the solution-compiled projects.</para>
+              <para>Loading them directly as tasks has a problem of correctly resolving paths to their DLLs and the DLL references of them. This task makes use of the resolved output DLL paths for the referenced projects, which gives out the task DLL location and any its possible dependencies of interest.</para>
+              <para>This task would load the task stub class from the compiled solution project assembly, and invoke its instance constructor with two parameters, see xmldoc on this task properties for details.</para>
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.ProxyToSolutionCompiledTask.Parameters">
+            <summary>
+            Input parameters, singular or plural, all of them together.
+            These parameters are passed to the task stub being executed in the format of <c>Dictionary&lt;string, string&gt;[]</c>, one dictionary per task item, in order of appearance.
+            The dictionary has all of the Task Item metadata, as in <see cref="P:Microsoft.Build.Framework.ITaskItem.MetadataNames" />, read the <c>Identity</c> metadata value for the Item Spec.
+            This array is passed into the first parameter of the task stub class constructor.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.ProxyToSolutionCompiledTask.References">
+            <summary>
+            Pass the <c>@(ReferencePath)</c> item group of a standard managed project. This would point to all of the resolved reference DLLs, be those project outputs or binary refs or nugets. The task runner would use this for assembly resolve.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.ProxyToSolutionCompiledTask.Returns">
+            <summary>
+            Output parameters.
+            A non-NULL empty <c>List&lt;Dictionary&lt;string, string&gt;&gt;</c> is passed to the second parameter of the task stub class, if it has two or more parameters.
+            Each dictionary you add to this list would become a task item in <see cref="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.ProxyToSolutionCompiledTask.Returns" />, its Item Spec would be taken from the <c>Identity</c> dictionary value, and the rest goes as task item metadata.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.ProxyToSolutionCompiledTask.TargetAssemblySimpleName">
+            <summary>
+            The simple name of the task project output assembly.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.ProxyToSolutionCompiledTask.TargetClassSimpleName">
+            <summary>
+              <para>The simple name of the class in <see cref="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.ProxyToSolutionCompiledTask.TargetAssemblySimpleName" /> which implements the task stub and runs the task body.</para>
+              <para>Delay-loaded and executed by calling the ctor with:</para>
+              <para>One parameter: <c>Dictionary&lt;string, string&gt;[]</c>, see <see cref="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.ProxyToSolutionCompiledTask.Parameters" /> for details.</para>
+              <para>Two parameters: as previous, plus <c>List&lt;Dictionary&lt;string, string&gt;&gt;</c>, see <see cref="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.ProxyToSolutionCompiledTask.Returns" /> for details.</para>
+              <para>Three parameters: as previous, plus <c>IDictionary&lt;string, Action&lt;string&gt;&gt;</c> which writes build errors/warnings/messages, see remarks.</para>
+            </summary>
+            <remarks>
+              <para>The log writers dictionary is of type <c>IDictionary&lt;string, Action&lt;string&gt;&gt;</c> and maps the writer channel name to a functor which writes a message.</para>
+              <para>Channel names are (case-insensitively):</para>
+              <para><c>E</c>, <c>error</c> for writing errors;</para>
+              <para><c>W</c>, <c>warn</c>, <c>warning</c> for writing errors;</para>
+              <para><c></c> (an empty string), <c>I</c>, <c>N</c>, <c>info</c>, <c>normal</c> for writing normal-priority messages;</para>
+              <para><c>L</c>, <c>low</c> for writing low-priority messages;</para>
+              <para><c>H</c>, <c>high</c> for writing high-priority messages.</para>
+            </remarks>
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.ProxyToSolutionCompiledTask.Microsoft#Build#Framework#ITask#BuildEngine">
+            <inheritdoc />
+        </member>
+        <member name="P:JetBrains.Build.Tasks.ProxyToSolutionCompiledTaskTask.ProxyToSolutionCompiledTask.Microsoft#Build#Framework#ITask#HostObject">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

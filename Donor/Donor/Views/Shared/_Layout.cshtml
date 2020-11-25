@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <script type='text/javascript'>
+
+        var appInsights=window.appInsights||function(config)
+        {
+            function r(config){ t[config] = function(){ var i = arguments; t.queue.push(function(){ t[config].apply(t, i)})} }
+            var t = { config:config},u=document,e=window,o='script',s=u.createElement(o),i,f;for(s.src=config.url||'//az416426.vo.msecnd.net/scripts/a/ai.0.js',u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=['Event','Exception','Metric','PageView','Trace','Ajax'];i.length;)r('track'+i.pop());return r('setAuthenticatedUserContext'),r('clearAuthenticatedUserContext'),config.disableExceptionTracking||(i='onerror',r('_'+i),f=e[i],e[i]=function(config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t['_' + i](config, r, u, e, o),s}),t
+        }({
+            instrumentationKey:'f7b80797-1bf1-4658-a562-2f764dbe743f'
+        });
+
+        window.appInsights=appInsights;
+        appInsights.trackPageView();
+    </script>
+</head>
+<body>
+    <script>
+      function initMap() {
+        var myLatlng = {lat: -23.5239124, lng: -46.622851};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: myLatlng
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: 'Clique para ampliar'
+        });
+
+        map.addListener('center_changed', function() {
+          // 3 seconds after the center of the map has changed, pan back to the
+          // marker.
+          window.setTimeout(function() {
+            map.panTo(marker.getPosition());
+          }, 3000);
+        });
+
+        marker.addListener('click', function() {
+          map.setZoom(8);
+          map.setCenter(marker.getPosition());
+        });
+      }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAousIC_0nYnPf9xo6FN2DErsrffsPD3Cg&callback=initMap">
+    </script>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+        @if (Request.IsAuthenticated == false)
+{
+            <div class="navbar-header">
+            
+            
+                <p style="margin-top:15px; margin-right:15px; color:#ffffff">Bem vindo ao Donor!</p>
+            
+              <!--  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button> 
+
+                @Html.ActionLink("Donor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" }) -->
+                
+            </div>
+            }
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                    <!-- <li>@Html.ActionLink("Início", "Index", "Home")</li>
+                                        <li>@Html.ActionLink("Sobre", "About", "Home")</li> -->
+
+                     <!--<li>@Html.ActionLink("Início", "Index", "Home")</li>
+                                       <li>@Html.ActionLink("Sobre", "About", "Home")</li> -->
+
+                   <!--  <li>@Html.ActionLink("Início", "Index", "Home")</li>-->
+                    <!--                    <li>@Html.ActionLink("Sobre", "About", "Home")</li> -->
+
+                    <!--                    <li>@Html.ActionLink("Contato", "Contact", "Home")</li> -->
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Registrar Doação", "Create", "Doacao")</li>
+                        <li>@Html.ActionLink("Registrar Comprimento de Cabelo", "Index", "ComprimentoCabelo")</li>
+                    }
+                    <li>@Html.ActionLink("Requisitos para Doações", "Index", "RequisitoDoacao")</li>
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @if (ViewBag.Page == "Inicial")
+        {
+            <div class="row">
+                <div class="col-md-3">
+
+                    <img src="~/Content/images/logo.png" class="logo" />
+                </div>
+
+                <div class="col-md-9">
+
+                    <p style="margin-top:60px; float:right; font-size:16px; font-weight:bold;">
+                    @Html.ActionLink("INICIAL", "Index", "Home")&emsp;&emsp;
+                    @Html.ActionLink("SOBRE", "About", "Home")&emsp;&emsp;
+                    @Html.ActionLink("CAMPANHAS", "Index", "Home")&emsp;&emsp;
+                    @Html.ActionLink("FALE CONOSCO", "Contact", "Home")
+</p>
+
+                </div>
+
+            </div>
+
+
+        }
+        else{
+
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <a href="@Url.Action("Index", "Home")" title="Página inicial">
+                    <img alt="Página Inicial" src="@Url.Content("~/Content/images/logo.png")" class="logo_pq">
+                </a>
+
+</div>
+
+        </div>
+        }
+
+        @RenderBody()
+     <!--   <hr /> -->
+        <footer>
+            <table cellpadding="5" style="background-color:#F74051; color:#ffffff; width:100%"><tr><td>&copy; @DateTime.Now.Year - Equipe Donor</td></tr></table>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

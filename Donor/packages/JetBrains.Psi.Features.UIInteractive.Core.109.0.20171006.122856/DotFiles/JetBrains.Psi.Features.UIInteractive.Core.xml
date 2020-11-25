@@ -1,0 +1,396 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JetBrains.Psi.Features.UIInteractive.Core</name>
+    </assembly>
+    <members>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.CodeCompletion.Lookup.Lookup">
+            <summary>
+            Form which is used to display list of lookup items
+            </summary>
+        </member>
+        <member name="E:JetBrains.Psi.Features.UIInteractive.Core.CodeCompletion.Lookup.Lookup.CurrentItemChanged">
+            <summary>
+              Event which is raised when the current item changes
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.CodeCompletion.Lookup.LookupWindowManager">
+            <summary>
+            Manages currently shown lookup window
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UIInteractive.Core.CodeCompletion.Lookup.LookupWindowManager.IsExternalDocumentChangeAllowed">
+            <summary>
+            If this flag is set, any document change doesn't cancel code completion
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UIInteractive.Core.CodeCompletion.Lookup.VirtualLookupWindow.AutoActivate">
+            <summary>
+              Gets or sets whether the control should be activated initially when it's shown.
+              The typical implementation for a form is to return a negative of this value from the
+              <see cref="P:System.Windows.Forms.Form.ShowWithoutActivation"/> override.
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UIInteractive.Core.CodeCompletion.Lookup.VirtualLookupWindow.CurrentItemBounds">
+            <summary>
+              Gets bounds of the current item
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.FeatureSuggestion.FeatureSuggestionToolView">
+            <summary>
+            FeatureSuggestionToolView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.FeatureSuggestion.FeatureSuggestionToolView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.FeatureSuggestion.SuggestionNotificationControl">
+            <summary>
+            SuggestionNotificationControl
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.FeatureSuggestion.SuggestionNotificationControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.Generate.GenerateWindowView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LiveTemplates.FileTemplates.ExtensionLocationView">
+            <summary>
+            ExtensionLocationView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LiveTemplates.FileTemplates.ExtensionLocationView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LiveTemplates.FileTemplates.RelativeLocationView">
+            <summary>
+            RelativeLocationView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LiveTemplates.FileTemplates.RelativeLocationView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.ReSharper.Feature.Services.LiveTemplates.Scope.FileMaskScopeConfig">
+            <summary>
+            FileMaskScopeConfig
+            </summary>
+        </member>
+        <member name="M:JetBrains.ReSharper.Feature.Services.LiveTemplates.Scope.FileMaskScopeConfig.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LiveTemplates.Scope.ScopeSelectorControl">
+            <summary>
+            ScopeSelectorControl
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LiveTemplates.Scope.ScopeSelectorControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LiveTemplates.Scope.ScopeSelectorDialog">
+            <summary>
+            ScopeSelectorDialog
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LiveTemplates.Scope.ScopeSelectorDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.ILocalHistoryItem.RevertOrder">
+            <summary>
+             Indicates the oder in which this change should be reverted relative to other changes
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.CombinedHistoryItemView">
+            <summary>
+            Interaction logic for CombinedHistoryItemView.xaml
+            </summary>
+            <summary>
+            CombinedHistoryItemView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.CombinedHistoryItemView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryDisabledView">
+            <summary>
+            Interaction logic for LocalHistoryDisabledView.xaml
+            </summary>
+            <summary>
+            LocalHistoryDisabledView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryDisabledView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryEnabledView">
+            <summary>
+            Interaction logic for LocalHistoryEnabledView.xaml
+            </summary>
+            <summary>
+            LocalHistoryEnabledView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryEnabledView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryFilterPanel">
+            <summary>
+            Interaction logic for LocalHistoryFilterPanel.xaml
+            </summary>
+            <summary>
+            LocalHistoryFilterPanel
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryFilterPanel.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryItemView">
+            <summary>
+            Interaction logic for LocalHistoryItemView.xaml
+            </summary>
+            <summary>
+            LocalHistoryItemView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryItemView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryListView">
+            <summary>
+            Interaction logic for LocalHistoryListView.xaml
+            </summary>
+            <summary>
+            LocalHistoryListView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryListView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryPagedListView">
+            <summary>
+              Interaction logic for LocalHistoryPagedListView.xaml
+            </summary>
+            <summary>
+            LocalHistoryPagedListView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryPagedListView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryView">
+            <summary>
+            Interaction logic for LocalHistoryView.xaml
+            </summary>
+            <summary>
+            LocalHistoryView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.LocalHistoryView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.TextualHistoryItemView">
+            <summary>
+              Interaction logic for TextualHistoryItemView.xaml
+            </summary>
+            <summary>
+            TextualHistoryItemView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.TextualHistoryItemView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="F:JetBrains.Psi.Features.UIInteractive.Core.Naming.AdvancedNamingSettingsForm`1.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.Naming.AdvancedNamingSettingsForm`1.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.Naming.AdvancedNamingSettingsForm`1.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.Naming.CustomNamingOptionsPageView">
+            <summary>
+            CustomNamingOptionsPageView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.Naming.CustomNamingOptionsPageView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="F:JetBrains.Psi.Features.UIInteractive.Core.Naming.EditNamingPolicyControl.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.Naming.EditNamingPolicyControl.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.Naming.EditNamingPolicyControl.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.Naming.EditNamingPolicyDialog">
+            <summary>
+            Interaction logic for MainWindow.xaml
+            </summary>
+            <summary>
+            EditNamingPolicyDialog
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.Naming.EditNamingPolicyDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UIInteractive.Core.Naming.EditNamingPolicyDialog.SelectedSettingsLayer">
+            <summary>
+            Gets settings layer if user used Save To, null otherwise
+            </summary>
+        </member>
+        <member name="P:JetBrains.Psi.Features.UIInteractive.Core.Naming.EditNamingPolicyDialog.CanSaveTo">
+            <summary>
+            Gets whether to show save to button
+            </summary>
+        </member>
+        <member name="F:JetBrains.Psi.Features.UIInteractive.Core.Naming.EditUserRuleForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.Naming.EditUserRuleForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.Naming.EditUserRuleForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.Naming.JavaScript.TypeScriptNamingOptionsPageView">
+            <summary>
+            TypeScriptNamingOptionsPageView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.Naming.JavaScript.TypeScriptNamingOptionsPageView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.Naming.PredefinedNamingSettingsPage">
+            <summary>
+            PredefinedNamingSettingsPage
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.Naming.PredefinedNamingSettingsPage.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.OptionPages.JavaScript.JsonCatalogSelector.JsonCatalogSelectorOptionsView">
+            <summary>
+            JsonCatalogSelectorOptionsView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.OptionPages.JavaScript.JsonCatalogSelector.JsonCatalogSelectorOptionsView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.OptionPages.JavaScript.JsonCatalogSelector.JsonSchemaSelectionDialog">
+            <summary>
+            JsonSchemaSelectionDialog
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.OptionPages.JavaScript.JsonCatalogSelector.JsonSchemaSelectionDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.OptionPages.JavaScript.JsonFeatureSelector.JsonFeatureSelectorOptionsView">
+            <summary>
+            JsonFeatureSelectorOptionsView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.OptionPages.JavaScript.JsonFeatureSelector.JsonFeatureSelectorOptionsView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.OptionPages.LanguageInjections.LanguageInjectionsOptionsView">
+            <summary>
+            LanguageInjectionsOptionsView
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.OptionPages.LanguageInjections.LanguageInjectionsOptionsView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.Presentation.FindResultsPanelLegacy">
+            <summary>
+            Only for non-live tree view
+            </summary>
+        </member>
+        <member name="T:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.ToolboxResourceDictionary">
+            <summary>
+            ToolboxResourceDictionary
+            </summary>
+        </member>
+        <member name="M:JetBrains.Psi.Features.UIInteractive.Core.LocalHistory.UI.ToolboxResourceDictionary.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetFrameworkVersionNumberRopyjej Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*'))">$([MSBuild]::Add($([MSBuild]::Multiply($([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*', '$1')), 1000)), $([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v(\d+)\.(\d+).*', '$2'))))</TargetFrameworkVersionNumberRopyjej>
+    <TargetFrameworkVersionNumberRopyjej Condition="'$(TargetFrameworkVersionNumberRopyjej)' == ''">65535</TargetFrameworkVersionNumberRopyjej>
+  </PropertyGroup>
+  <ItemGroup>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.SDK.Common.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Platform.SDK.Common" Condition="($(TargetFrameworkVersionNumberRopyjej) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.SDK.Common.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.SDK.Helper.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Platform.SDK.Helper" Condition="($(TargetFrameworkVersionNumberRopyjej) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.SDK.Helper.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetReference Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.SDK.MsBuild.dll">
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </JetReference>
+    <Reference Include="JetBrains.Platform.SDK.MsBuild" Condition="($(TargetFrameworkVersionNumberRopyjej) &gt;= 4005) OR ('$(JetReferencesNoFilter)' == 'True')">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.SDK.MsBuild.dll</HintPath>
+      <Private>$(JetReferencesPrivate)</Private>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <TargetFrameworkVersionNumber>4005</TargetFrameworkVersionNumber>
+    </Reference>
+    <JetMetadata Include="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.Platform.Sdk.JetMetadata.sstg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildThisFileDirectory)..\DotFiles\JetBrains.CommonSdk.targets" />
+</Project>

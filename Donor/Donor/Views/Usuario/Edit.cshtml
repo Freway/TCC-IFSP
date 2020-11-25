@@ -1,0 +1,222 @@
+﻿@model Donor.Models.Usuario
+
+@{
+    ViewBag.Title = "Editar Perfil";
+}
+
+
+<div class="row">
+    <div class="col col-md-8">
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Perfil</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.IdUsuario)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Sexo, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(m => m.Sexo, new SelectList(new List<object>{
+                            new{value = "", text = ""},
+                            new{value = "M", text = "Masculino"},
+                            new{value = "F", text = "Feminino"}
+                        }, "value", "text", ""), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Sexo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TipoSanguineo, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(m => m.TipoSanguineo, new SelectList(new List<object>{
+                            new{value = "A+", text = "A+"},
+                            new{value = "A-", text = "A-"},
+                            new{value = "B+", text = "B+"},
+                            new{value = "B-", text = "B-"},
+                            new{value = "AB+", text = "AB+"},
+                            new{value = "AB-", text = "AB-"},
+                            new{value = "O+", text = "O+"},
+                            new{value = "O-", text = "O-"}
+                        }, "value", "text", ""), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TipoSanguineo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Telefone, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Telefone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Telefone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdMunicipio, "Estado", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <select class="form-control col-md-5" id="sel_estado">
+                            <option value=" " selected></option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdMunicipio, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("IdMunicipio", null, htmlAttributes: new { @class = "form-control col-md-5" })
+                        @Html.ValidationMessageFor(model => model.IdMunicipio, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DoadorMedula, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.DoadorMedula)
+                            @Html.ValidationMessageFor(model => model.DoadorMedula, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                
+                <input hidden name="IdTipoUsuario" value="@Model.IdTipoUsuario" />
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Salvar Alterações" class="btn btn-default" />
+                        @Html.ActionLink("Alterar Senha", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Desativar", "Delete", "Usuario", routeValues: new { Id = Model.IdUsuario }, htmlAttributes: new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col col-md-4" style="margin-top:50px;">
+        <h3>Cidades onde posso doar</h3>
+        Estado:<br /><input hidden id="id_usuario" value="@Model.IdUsuario"/>
+         <select class="form-control col-md-2" id="sel_estado2">
+            <option value=" " selected></option>
+        </select>
+        <br /><br />Município:</br><select class="form-control col-md-8" id="municipios">
+            @{
+                var lista = (SelectList) ViewBag.IdMunicipio;
+                foreach (var item in lista){
+                    <option value="@item.Value">@item.Text</option>
+                }
+            }
+        </select>
+        <button class="btn btn-sm btn-primary col-md-2" id="addMun"><i class="glyphicon glyphicon-plus"></i></button>
+        
+        <br /><br />Minicípios Selecionados: <select multiple class="form-control" id="estadosSelecionados">  
+            @foreach (var mun in Model.Municipios){
+                <option value="@mun.IdMunicipio">@mun.Municipio1</option>
+            }
+        </select>
+        <br />
+        <button class="btn btn-success" id="btnSalvar">Salvar Cidades</button>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerymask")
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            console.log("Teste");
+            $.ajax({
+                url: "/Usuario/GetEstados",
+                dataType: "json",
+                success: function (estados) {
+                    for (var i = 0; i < estados.length; i++) {
+                        $("#sel_estado").append($("<option />").val(estados[i]).text(estados[i]).attr("selected", (estados[i] === "@ViewBag.EstadoSel")));
+                        $("#sel_estado2").append($("<option />").val(estados[i]).text(estados[i]));
+                    }
+                }
+            });
+
+            $("#Telefone").mask("(99) 99999-9999");
+        });
+
+        $("#sel_estado").change(function () {
+            var estado = $("#sel_estado").val();
+            console.log("Chamando api....");
+            $("#IdMunicipio").empty();
+            $("#IdMunicipio").append($("<option />").val("Carregando Cidades").text("Carregado Cidades..."));
+            $.ajax({
+                url: "/municipios?estado=" + estado, dataType: "json",
+                success: function (result) {
+                    $("#IdMunicipio").empty();
+                    for (var i = 0; i < result.length; i++) {
+                        $("#IdMunicipio").append($("<option />").val(result[i].IdMunicipio).text(result[i].Municipio1));
+                    }
+                }, error: function(erro) {
+                    console.log(erro);
+                }});
+        });
+
+        $("#sel_estado2").change(function () {
+            var estado = $("#sel_estado2").val();
+            console.log("Chamando api....");
+            $("#municipios").empty();
+            $("#municipios").append($("<option />").val("Carregando Cidades").text("Carregado Cidades..."));
+            $.ajax({
+                url: "/municipios?estado=" + estado, dataType: "json",
+                success: function (result) {
+                    $("#municipios").empty();
+                    for (var i = 0; i < result.length; i++) {
+                        $("#municipios").append($("<option />").val(result[i].IdMunicipio).text(result[i].Municipio1));
+                    }
+                }, error: function (erro) {
+                    console.log(erro);
+                }
+            });
+        });
+
+        $("#addMun").click(function() {
+            var munAtual = $("#municipios").find(":selected");            
+            if ($("#estadosSelecionados option[value='"+munAtual.val()+"']").length === 0) {
+                $("#estadosSelecionados").append($("<option />").val(munAtual.val()).text(munAtual.text()));   
+            }
+        });
+
+        $("#btnSalvar").click(function() {
+            var data = {
+                IdUsuario: $("#id_usuario").val(),
+                ListCidades: []
+            };
+
+            $("#estadosSelecionados > option").each(function() {
+                data.ListCidades.push(this.value);
+            });
+
+            $.ajax({
+                url: "/Usuario/AddEstados",
+                data: data,
+                dataType: "json",
+                method: "POST",
+                success: function () {
+                    alert("Atualizado!");
+                }
+            });
+        });
+    </script>
+}

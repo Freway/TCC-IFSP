@@ -1,0 +1,23 @@
+﻿@model Donor.Models.Usuario
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Desativar Conta</h2>
+
+<div>
+    <h4>Desativar Conta</h4>
+    <hr />
+    <p>
+        @Html.DisplayFor(usuario => usuario.Nome), tem certeza que deseja desativar a sua conta?
+    </p>
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Desativar" class="btn btn-danger" /> |
+            @Html.ActionLink("Cancelar", "Index")
+        </div>
+    }
+</div>

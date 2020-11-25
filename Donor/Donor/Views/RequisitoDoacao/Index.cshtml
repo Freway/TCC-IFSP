@@ -1,0 +1,57 @@
+﻿@using Donor.Models
+@model IEnumerable<Donor.Models.RequisitoDoacao>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Requisitos para Doações</h2>
+
+<p>Para ser doador, é importante que você conheça alguns pré-requisitos gerais. Verifique se você atende a estas condições:</p>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+
+    @*<tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PontoDeDoacao.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th></th>
+    </tr>*@
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>@Html.DisplayFor(modelItem => item.Descricao)</li>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.PontoDeDoacao.Nome)
+                </td>*@
+    
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.IdRequisitoDoacao }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.IdRequisitoDoacao }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.IdRequisitoDoacao })
+                </td>*@
+    }
+</ul>
+
+<p>Algumas instituições têm suas próprias regras além das gerais</p>
+<p>Selecione abaixo a instituição em que deseja fazer sua doação para consultar suas regras:</p>
+
+<select class="form-control">
+    @foreach(PontoDeDoacao item in ViewBag.ListaPontos) { 
+        <option value="item.IdPontoDeDoacao">@item.Nome</option>
+    }
+</select>
+<div>
+    <button type="button" class="btn btn-danger">Buscar</button>
+
+</div>
+
+
+
+
